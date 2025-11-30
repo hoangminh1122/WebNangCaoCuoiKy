@@ -13,7 +13,6 @@
         font-family: 'Segoe UI', sans-serif;
     }
 
-    /* Card bao quanh */
     .content-card {
         background: white;
         border-radius: 10px;
@@ -22,7 +21,6 @@
         min-height: 80vh;
     }
 
-    /* Header */
     .page-title {
         font-size: 24px;
         font-weight: 700;
@@ -30,7 +28,6 @@
         margin-bottom: 25px;
     }
 
-    /* Thanh tìm kiếm & Filter */
     .filter-wrapper {
         display: flex;
         justify-content: space-between;
@@ -86,7 +83,6 @@
             background-color: #edf2f7;
         }
 
-    /* Bảng dữ liệu */
     .custom-table {
         width: 100%;
         border-collapse: separate;
@@ -120,7 +116,6 @@
         font-size: 13px;
     }
 
-    /* Badge Trạng thái */
     .badge-status {
         padding: 5px 12px;
         border-radius: 20px;
@@ -133,14 +128,13 @@
         background-color: #c6f6d5;
         color: #22543d;
     }
-    /* Xanh lá */
+
     .badge-locked {
         background-color: #fed7d7;
         color: #822727;
     }
-    /* Đỏ nhạt */
 
-    /* Nút hành động */
+    /* Sửa nhẹ nút hành động để bấm được bằng JS */
     .action-icon {
         color: #718096;
         font-size: 16px;
@@ -148,6 +142,8 @@
         cursor: pointer;
         transition: 0.2s;
         text-decoration: none;
+        border: none;
+        background: none;
     }
 
         .action-icon:hover {
@@ -162,7 +158,6 @@
         color: #38a169;
     }
 
-    /* Checkbox */
     .custom-checkbox {
         width: 18px;
         height: 18px;
@@ -182,7 +177,6 @@
 
             <div style="display:flex; gap: 5px;">
                 @{ string s = Request.QueryString["statusFilter"]; }
-
                 <button type="submit" name="statusFilter" value="" class="btn-filter @(string.IsNullOrEmpty(s) ? "active" : "")">Tất cả</button>
                 <button type="submit" name="statusFilter" value="active" class="btn-filter @(s == "active" ? "active" : "")">Hoạt động</button>
                 <button type="submit" name="statusFilter" value="locked" class="btn-filter @(s == "locked" ? "active" : "")">Bị khóa</button>
@@ -230,15 +224,15 @@
 
                             @if (item.TrangThai)
                             {
-                                <a href="@Url.Action("ToggleStatus", new { id = item.MaND })" class="action-icon action-lock" title="Khóa tài khoản" onclick="return confirm('Bạn có chắc muốn KHÓA tài khoản này?');">
+                                <button type="button" class="action-icon action-lock" title="Khóa tài khoản" onclick="toggleStatus(@item.MaND, true)">
                                     <i class="fas fa-lock-open"></i>
-                                </a>
+                                </button>
                             }
                             else
                             {
-                                <a href="@Url.Action("ToggleStatus", new { id = item.MaND })" class="action-icon action-unlock" title="Mở khóa tài khoản" onclick="return confirm('Mở khóa tài khoản này?');">
+                                <button type="button" class="action-icon action-unlock" title="Mở khóa tài khoản" onclick="toggleStatus(@item.MaND, false)">
                                     <i class="fas fa-lock"></i>
-                                </a>
+                                </button>
                             }
                         </td>
                     </tr>
@@ -264,3 +258,51 @@
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // Hàm Xử lý Khóa / Mở khóa
+        function toggleStatus(id, willLock) {
+            // willLock = true nghĩa là đang muốn Khóa
+            // willLock = false nghĩa là đang muốn Mở Khóa
+
+            var titleText = willLock ? 'Khóa tài khoản này?' : 'Mở khóa tài khoản?';
+            var bodyText = willLock ? 'Người dùng sẽ không thể đăng nhập hệ thống.' : 'Người dùng sẽ hoạt động trở lại.';
+            var btnText = willLock ? 'Khóa ngay' : 'Mở khóa';
+            var btnColor = willLock ? '#e53e3e' : '#38a169'; // Đỏ hoặc Xanh
+            var iconType = willLock ? 'warning' : 'question';
+
+            Swal.fire({
+                title: titleText,
+                text: bodyText,
+                icon: iconType,
+                showCancelButton: true,
+                confirmButtonColor: btnColor,
+                cancelButtonColor: '#718096',
+                confirmButtonText: btnText,
+                cancelButtonText: 'Hủy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Hiển thị loading
+                    Swal.fire({ title: 'Đang xử lý...', showConfirmButton: false, didOpen: () => { Swal.showLoading() } });
+
+                    // Gọi AJAX về Controller
+                    $.post('@Url.Action("ToggleStatus", "KhachHang")', { id: id })
+                        .done(function (res) {
+                            if (res.success) {
+                                Swal.fire('Thành công!', res.message, 'success').then(() => location.reload());
+                            } else {
+                                Swal.fire('Lỗi', res.message, 'error');
+                            }
+                        })
+                        .fail(function () {
+                            Swal.fire('Lỗi Server', 'Không thể kết nối API.', 'error');
+                        });
+                }
+            });
+        }
+    </script>
+}

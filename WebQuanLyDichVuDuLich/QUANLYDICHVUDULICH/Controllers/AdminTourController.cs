@@ -60,6 +60,7 @@ namespace QUANLYDICHVUDULICH.API.Controllers
                     new SqlParameter("@TenTour", tour.TenTour ?? (object)DBNull.Value),
                     new SqlParameter("@GiaGoc", tour.GiaGoc),
                     new SqlParameter("@ThoiLuongNgay", tour.ThoiLuongNgay),
+                    new SqlParameter("@HinhAnhDaiDien", tour.HinhAnhDaiDien ?? (object)DBNull.Value),
 new SqlParameter("@TrangThai", tour.TrangThai ?? "Đang mở bán")
                 };
 
@@ -92,6 +93,7 @@ new SqlParameter("@TrangThai", tour.TrangThai ?? "Đang mở bán")
                     new SqlParameter("@TenTour", tour.TenTour ?? (object)DBNull.Value),
                     new SqlParameter("@GiaGoc", tour.GiaGoc),
                     new SqlParameter("@ThoiLuongNgay", tour.ThoiLuongNgay),
+                    new SqlParameter("@HinhAnhDaiDien", tour.HinhAnhDaiDien ?? (object)DBNull.Value),
                     new SqlParameter("@TrangThai", tour.TrangThai ?? "Đang mở bán")
                 };
 

@@ -7,15 +7,16 @@ using QUANLYDICHVUDULICH.API.Models;
 
 namespace QUANLYDICHVUDULICH.API.Controllers
 {
+    // ĐỔI ROUTE CHO CHUẨN
+    [RoutePrefix("api/adminkhachhang")]
     public class AdminKhachHangController : BaseApiController
     {
-        // 1. LẤY DANH SÁCH KHÁCH HÀNG (Chỉ lấy Role 'User')
+        // 1. LẤY DANH SÁCH KHÁCH HÀNG (GET api/adminkhachhang)
         [HttpGet]
-        [Route("api/khachhang")]
+        [Route("")]
         public IHttpActionResult GetKhachHangs()
         {
             List<KhachHangDTO> list = new List<KhachHangDTO>();
-            // SQL: Chỉ lấy người dùng thường, không lấy Admin
             string sql = @"SELECT MaND, HoTen, Email, SoDienThoai, NgayTao, TrangThai 
                            FROM NguoiDung 
                            WHERE VaiTro = 'User' 
@@ -33,7 +34,6 @@ namespace QUANLYDICHVUDULICH.API.Controllers
                         Email = row["Email"].ToString(),
                         SoDienThoai = row["SoDienThoai"] != DBNull.Value ? row["SoDienThoai"].ToString() : "",
                         NgayTao = Convert.ToDateTime(row["NgayTao"]),
-                        // Trong DB: 1 là Active, 0 là Locked
                         TrangThai = Convert.ToBoolean(row["TrangThai"])
                     });
                 }
@@ -42,19 +42,28 @@ namespace QUANLYDICHVUDULICH.API.Controllers
             catch (Exception ex) { return BadRequest(ex.Message); }
         }
 
-        // 2. KHÓA / MỞ KHÓA TÀI KHOẢN
+        // 2. KHÓA / MỞ KHÓA TÀI KHOẢN (POST api/adminkhachhang/toggle-status)
+        // Nhận JSON: { "MaND": 5 }
         [HttpPost]
-        [Route("api/khachhang/toggle-status")]
-        public IHttpActionResult ToggleStatus(int id)
+        [Route("toggle-status")]
+        public IHttpActionResult ToggleStatus([FromBody] dynamic data)
         {
             try
             {
+                if (data == null) return BadRequest("Dữ liệu rỗng");
+
+                int id = (int)data.MaND;
+
                 // Logic: Đảo ngược trạng thái hiện tại (Đang 1 thành 0, đang 0 thành 1)
                 string sql = "UPDATE NguoiDung SET TrangThai = CASE WHEN TrangThai = 1 THEN 0 ELSE 1 END WHERE MaND = @MaND";
                 SqlParameter[] param = { new SqlParameter("@MaND", id) };
 
-                ExecuteNonQuery(sql, param, false);
-                return Ok("Đổi trạng thái thành công");
+                int rows = ExecuteNonQuery(sql, param, false);
+
+                if (rows > 0)
+                    return Ok(new { message = "Đổi trạng thái thành công" });
+                else
+                    return BadRequest("Không tìm thấy khách hàng này.");
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
         }

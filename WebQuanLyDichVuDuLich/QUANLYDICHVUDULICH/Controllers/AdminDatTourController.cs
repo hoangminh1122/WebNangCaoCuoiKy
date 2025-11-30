@@ -7,7 +7,7 @@ using QUANLYDICHVUDULICH.API.Models;
 
 namespace QUANLYDICHVUDULICH.API.Controllers
 {
-    // ĐỔI ROUTE CHÍNH CHO KHỚP VỚI FRONTEND
+    // Dùng RoutePrefix cho chuẩn
     [RoutePrefix("api/admindattour")]
     public class AdminDatTourController : BaseApiController
     {
@@ -17,16 +17,10 @@ namespace QUANLYDICHVUDULICH.API.Controllers
         public IHttpActionResult GetDatTours()
         {
             List<DatTourDTO> list = new List<DatTourDTO>();
-
-            // Query lấy thông tin chi tiết
+            // Câu lệnh SQL giữ nguyên như cũ
             string sql = @"
-                SELECT 
-                    d.MaDatTour, 
-                    u.HoTen AS TenKhachHang, 
-                    t.TenTour, 
-                    t.NgayBatDau AS NgayKhoiHanh, 
-                    d.TongTien, 
-                    d.TrangThai
+                SELECT d.MaDatTour, u.HoTen AS TenKhachHang, t.TenTour, 
+                       t.NgayBatDau AS NgayKhoiHanh, d.TongTien, d.TrangThai
                 FROM DatTour d
                 LEFT JOIN NguoiDung u ON d.MaND = u.MaND
                 LEFT JOIN Tour t ON d.MaTour = t.MaTour
@@ -35,7 +29,6 @@ namespace QUANLYDICHVUDULICH.API.Controllers
             try
             {
                 DataTable dt = ExecuteQuery(sql);
-
                 foreach (DataRow row in dt.Rows)
                 {
                     list.Add(new DatTourDTO
@@ -48,66 +41,56 @@ namespace QUANLYDICHVUDULICH.API.Controllers
                         TrangThai = row["TrangThai"].ToString()
                     });
                 }
-
                 return Ok(list);
             }
-            catch (Exception ex)
-            {
-                return BadRequest("Lỗi truy vấn: " + ex.Message);
-            }
+            catch (Exception ex) { return BadRequest("Lỗi truy vấn: " + ex.Message); }
         }
 
-        // 2. POST: Cập nhật trạng thái (Duyệt / Hủy)
-        // Frontend gửi JSON: { "MaDatTour": 123, "TrangThai": "Đã xác nhận" }
+        // 2. POST: Cập nhật trạng thái
         [HttpPost]
         [Route("status")]
         public IHttpActionResult UpdateStatus([FromBody] dynamic data)
         {
-            if (data == null) return BadRequest("Dữ liệu rỗng");
-
             try
             {
                 int id = (int)data.MaDatTour;
                 string status = (string)data.TrangThai;
-
                 string sql = "UPDATE DatTour SET TrangThai = @TrangThai WHERE MaDatTour = @MaDatTour";
 
-                SqlParameter[] param = new SqlParameter[]
-                {
+                ExecuteNonQuery(sql, new SqlParameter[] {
                     new SqlParameter("@TrangThai", status),
                     new SqlParameter("@MaDatTour", id)
-                };
+                }, false);
 
-                int rows = ExecuteNonQuery(sql, param, false);
-
-                if (rows > 0)
-                    return Ok(new { message = "Cập nhật thành công" });
-                else
-                    return BadRequest("Không tìm thấy đơn hàng cần cập nhật.");
+                return Ok(new { message = "Cập nhật thành công" });
             }
-            catch (Exception ex)
-            {
-                return BadRequest("Lỗi cập nhật: " + ex.Message);
-            }
+            catch (Exception ex) { return BadRequest("Lỗi cập nhật: " + ex.Message); }
         }
 
-        // 3. DELETE: Xóa đơn hàng
-        // Gọi: DELETE api/admindattour/5
+        // 3. DELETE: Xóa đơn hàng (SỬA LOGIC XÓA)
+        // Route: api/admindattour/delete/5
         [HttpDelete]
-        [Route("{id}")]
+        [Route("delete/{id}")]
         public IHttpActionResult DeleteOrder(int id)
         {
             try
             {
-                string sql = "DELETE FROM Tour WHERE MaDatTour = @id";
-                ExecuteNonQuery(sql, new SqlParameter[] { new SqlParameter("@id", id) }, false);
-                return Ok("Đã xóa");
+                // BƯỚC 1: Xóa các bảng phụ trước (Ví dụ ThanhToan)
+                ExecuteNonQuery("DELETE FROM ThanhToan WHERE MaDatTour = @id", new SqlParameter[] { new SqlParameter("@id", id) });
+
+                // BƯỚC 2: Xóa bảng chính
+                string sql = "DELETE FROM DatTour WHERE MaDatTour = @id";
+                int rows = ExecuteNonQuery(sql, new SqlParameter[] { new SqlParameter("@id", id) }, false);
+
+                if (rows > 0)
+                    return Ok(new { message = "Đã xóa đơn hàng" });
+                else
+                    return BadRequest("Đơn hàng không tồn tại hoặc đã bị xóa.");
             }
             catch (Exception ex)
             {
-                // Bắt lỗi ràng buộc khóa ngoại (Foreign Key)
                 if (ex.Message.Contains("REFERENCE"))
-                    return BadRequest("Không thể xóa Đơn đặt Tour này!");
+                    return BadRequest("Không thể xóa đơn này vì dính khóa ngoại.");
 
                 return BadRequest("Lỗi xóa: " + ex.Message);
             }

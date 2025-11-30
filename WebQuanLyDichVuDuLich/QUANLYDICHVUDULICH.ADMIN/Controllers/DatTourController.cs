@@ -8,16 +8,16 @@ namespace QUANLYDICHVUDULICH.ADMIN.Controllers
 {
     public class DatTourController : BaseController
     {
-        // 1. Hiển thị danh sách đơn hàng
+        // 1. Hiển thị danh sách
         public ActionResult Index(string searchString, string status)
         {
             try
             {
-                // Gọi API lấy danh sách (Lưu ý: kiểm tra lại đường dẫn API của bạn là 'api/dattour' hay 'api/admindattour')
+                // Gọi API lấy danh sách
                 var listBooking = GetFromApi<List<DatTourViewModel>>("api/admindattour");
                 if (listBooking == null) listBooking = new List<DatTourViewModel>();
 
-                // Xử lý tìm kiếm & Lọc tại Client
+                // Lọc dữ liệu
                 if (!string.IsNullOrEmpty(searchString))
                 {
                     listBooking = listBooking.FindAll(s => s.TenKhachHang.ToLower().Contains(searchString.ToLower())
@@ -37,24 +37,20 @@ namespace QUANLYDICHVUDULICH.ADMIN.Controllers
             }
         }
 
-        // 2. Chức năng DUYỆT ĐƠN (POST AJAX)
+        // 2. Duyệt đơn
         [HttpPost]
         public ActionResult Approve(int id)
         {
-            // Tạo đối tượng dữ liệu gửi lên API
             var data = new { MaDatTour = id, TrangThai = "Đã xác nhận" };
 
-            // Gọi API cập nhật (Giả sử bạn dùng API Update chung hoặc API riêng)
-            // Lưu ý: Đường dẫn API phải khớp với bên Project API
             if (PostToApi("api/admindattour/status", data))
             {
                 return Json(new { success = true, message = "Duyệt đơn hàng thành công!" });
             }
-
             return Json(new { success = false, message = "Lỗi khi gọi API Duyệt đơn." });
         }
 
-        // 3. Chức năng HỦY ĐƠN (POST AJAX)
+        // 3. Hủy đơn
         [HttpPost]
         public ActionResult Cancel(int id)
         {
@@ -64,21 +60,24 @@ namespace QUANLYDICHVUDULICH.ADMIN.Controllers
             {
                 return Json(new { success = true, message = "Đã hủy đơn hàng!" });
             }
-
             return Json(new { success = false, message = "Lỗi khi gọi API Hủy đơn." });
         }
 
-        // 4. Chức năng XÓA (POST AJAX)
+        // 4. Xóa đơn (SỬA ĐƯỜNG DẪN KHỚP API)
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            // Gọi API xóa
-            if (DeleteFromApi("api/admindattour/" + id))
+            // API: api/admindattour/delete/{id}
+            bool result = DeleteFromApi("api/admindattour/delete/" + id);
+
+            if (result)
             {
                 return Json(new { success = true, message = "Xóa thành công!" });
             }
 
-            return Json(new { success = false, message = "Không thể xóa đơn này (Do ràng buộc dữ liệu hoặc lỗi API)." });
+            // Nếu API trả về BadRequest, hàm DeleteFromApi trả về false
+            // Có thể nâng cấp BaseController để lấy message lỗi chi tiết, nhưng tạm thời báo chung chung
+            return Json(new { success = false, message = "Không thể xóa đơn này (Lỗi server hoặc dữ liệu ràng buộc)." });
         }
     }
 }
