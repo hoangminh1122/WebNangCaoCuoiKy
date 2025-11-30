@@ -1,0 +1,142 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{97EA9C04-CE8A-40E2-A37F-B28BF7D71DAF}|..\\QUANLYDICHVUDULICH.ADMIN\\QUANLYDICHVUDULICH.ADMIN.csproj|d:\\kyhoc125\\web n\u00E2ng cao\\webquanlydichvudulich\\quanlydichvudulich.admin\\models\\tourviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AEE753B6-C10E-4A7C-9A25-5623646CC4FB}|QUANLYDICHVUDULICH.API.csproj|d:\\kyhoc125\\web n\u00E2ng cao\\webquanlydichvudulich\\quanlydichvudulich\\models\\tourmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AEE753B6-C10E-4A7C-9A25-5623646CC4FB}|QUANLYDICHVUDULICH.API.csproj|solutionrelative:models\\tourmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97EA9C04-CE8A-40E2-A37F-B28BF7D71DAF}|..\\QUANLYDICHVUDULICH.ADMIN\\QUANLYDICHVUDULICH.ADMIN.csproj|d:\\kyhoc125\\web n\u00E2ng cao\\webquanlydichvudulich\\quanlydichvudulich.admin\\views\\tour\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AEE753B6-C10E-4A7C-9A25-5623646CC4FB}|QUANLYDICHVUDULICH.API.csproj|d:\\kyhoc125\\web n\u00E2ng cao\\webquanlydichvudulich\\quanlydichvudulich\\controllers\\admintourcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AEE753B6-C10E-4A7C-9A25-5623646CC4FB}|QUANLYDICHVUDULICH.API.csproj|solutionrelative:controllers\\admintourcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97EA9C04-CE8A-40E2-A37F-B28BF7D71DAF}|..\\QUANLYDICHVUDULICH.ADMIN\\QUANLYDICHVUDULICH.ADMIN.csproj|d:\\kyhoc125\\web n\u00E2ng cao\\webquanlydichvudulich\\quanlydichvudulich.admin\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97EA9C04-CE8A-40E2-A37F-B28BF7D71DAF}|..\\QUANLYDICHVUDULICH.ADMIN\\QUANLYDICHVUDULICH.ADMIN.csproj|d:\\kyhoc125\\web n\u00E2ng cao\\webquanlydichvudulich\\quanlydichvudulich.admin\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97EA9C04-CE8A-40E2-A37F-B28BF7D71DAF}|..\\QUANLYDICHVUDULICH.ADMIN\\QUANLYDICHVUDULICH.ADMIN.csproj|d:\\kyhoc125\\web n\u00E2ng cao\\webquanlydichvudulich\\quanlydichvudulich.admin\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TourViewModel.cs",
+              "DocumentMoniker": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Models\\TourViewModel.cs",
+              "RelativeDocumentMoniker": "..\\QUANLYDICHVUDULICH.ADMIN\\Models\\TourViewModel.cs",
+              "ToolTip": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Models\\TourViewModel.cs",
+              "RelativeToolTip": "..\\QUANLYDICHVUDULICH.ADMIN\\Models\\TourViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-30T13:03:46.217Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TourModel.cs",
+              "DocumentMoniker": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH\\Models\\TourModel.cs",
+              "RelativeDocumentMoniker": "Models\\TourModel.cs",
+              "ToolTip": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH\\Models\\TourModel.cs",
+              "RelativeToolTip": "Models\\TourModel.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAwAwAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-30T13:03:19.096Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "..\\QUANLYDICHVUDULICH.ADMIN\\Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "..\\QUANLYDICHVUDULICH.ADMIN\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-30T13:00:05.656Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Views\\Tour\\Index.cshtml",
+              "RelativeDocumentMoniker": "..\\QUANLYDICHVUDULICH.ADMIN\\Views\\Tour\\Index.cshtml",
+              "ToolTip": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Views\\Tour\\Index.cshtml",
+              "RelativeToolTip": "..\\QUANLYDICHVUDULICH.ADMIN\\Views\\Tour\\Index.cshtml",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-30T12:59:59.913Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "..\\QUANLYDICHVUDULICH.ADMIN\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "..\\QUANLYDICHVUDULICH.ADMIN\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAANMAAAAAAAAAAAAAAO0AAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-30T12:59:44.131Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Web.config",
+              "DocumentMoniker": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Web.config",
+              "RelativeDocumentMoniker": "..\\QUANLYDICHVUDULICH.ADMIN\\Web.config",
+              "ToolTip": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Web.config",
+              "RelativeToolTip": "..\\QUANLYDICHVUDULICH.ADMIN\\Web.config",
+              "ViewState": "AgIAABgAAAAAAAAAAAAiwDAAAABUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2025-11-30T12:53:35.529Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AdminTourController.cs",
+              "DocumentMoniker": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH\\Controllers\\AdminTourController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AdminTourController.cs",
+              "ToolTip": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH\\Controllers\\AdminTourController.cs",
+              "RelativeToolTip": "Controllers\\AdminTourController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-30T12:46:18.213Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

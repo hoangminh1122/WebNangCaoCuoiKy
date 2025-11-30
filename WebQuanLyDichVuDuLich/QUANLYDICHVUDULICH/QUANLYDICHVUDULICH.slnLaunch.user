@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "QUANLYDICHVUDULICH.API.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "..\\QUANLYDICHVUDULICH.ADMIN\\QUANLYDICHVUDULICH.ADMIN.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

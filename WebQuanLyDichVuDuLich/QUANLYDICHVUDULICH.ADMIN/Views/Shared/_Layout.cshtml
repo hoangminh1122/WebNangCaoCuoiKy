@@ -1,0 +1,272 @@
+﻿@{
+    // Lấy tên Controller hiện tại để so sánh và highlight menu
+    string currentController = ViewContext.RouteData.Values["controller"].ToString();
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - TourAdmin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --bg-light: #f8f9fa;
+            --sidebar-width: 250px;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: white;
+            border-right: 1px solid #e9ecef;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+            .brand i {
+                color: var(--primary-color);
+            }
+
+        .nav-item {
+            margin-bottom: 5px;
+        }
+
+        .nav-link {
+            color: #6c757d;
+            font-weight: 500;
+            padding: 12px 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+            .nav-link:hover, .nav-link.active {
+                background-color: #e7f1ff;
+                color: var(--primary-color);
+            }
+
+            .nav-link i {
+                font-size: 1.2rem;
+            }
+
+        .logout-btn {
+            position: absolute;
+            bottom: 20px;
+            width: calc(100% - 40px);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 20px 40px;
+        }
+
+        /* Header */
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            background: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            width: 300px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+            .search-box input {
+                border: none;
+                outline: none;
+                width: 100%;
+            }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Card styles */
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #eaecf0;
+            height: 100%;
+        }
+
+        .stat-title {
+            color: #667085;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #101828;
+            margin-bottom: 5px;
+        }
+
+        .stat-trend {
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .text-success {
+            color: #12b76a !important;
+        }
+
+        .text-danger {
+            color: #f04438 !important;
+        }
+
+        /* Chart & List section */
+        .content-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #eaecf0;
+            height: 100%;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .tour-item {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .tour-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .tour-info h6 {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .tour-info span {
+            font-size: 12px;
+            color: #667085;
+        }
+
+        .tour-price {
+            margin-left: auto;
+            font-weight: bold;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="brand"><i class="bi bi-flag-fill"></i> TourAdmin</div>
+
+        <nav class="nav flex-column">
+            <a class="nav-link @(currentController == "Home" ? "active" : "")" href="@Url.Action("Index", "Home")">
+                <i class="bi bi-grid-fill"></i> Bảng điều khiển
+            </a>
+
+            <a class="nav-link @(currentController == "Tour" ? "active" : "")" href="@Url.Action("Index", "Tour")">
+                <i class="bi bi-map"></i> Quản lý Tour
+            </a>
+
+            <a class="nav-link @(currentController == "Order" ? "active" : "")" href="#">
+                <i class="bi bi-receipt"></i> Đơn đặt tour
+            </a>
+
+            <a class="nav-link @(currentController == "Customer" ? "active" : "")" href="#">
+                <i class="bi bi-people"></i> Khách hàng
+            </a>
+
+            <a class="nav-link @(currentController == "News" ? "active" : "")" href="#">
+                <i class="bi bi-journal-text"></i> Quản lý bài viết
+            </a>
+        </nav>
+
+        <a href="/Account/Logout" class="nav-link logout-btn text-danger">
+            <i class="bi bi-box-arrow-right"></i> Đăng xuất
+        </a>
+    </div>
+
+    <div class="main-content">
+        <div class="top-header">
+            <h3>@ViewBag.Title</h3>
+
+            <div class="d-flex align-items-center gap-4">
+                <div class="search-box">
+                    <i class="bi bi-search text-muted"></i>
+                    <input type="text" placeholder="Tìm kiếm tour, khách hàng...">
+                </div>
+                <div class="user-profile">
+                    <i class="bi bi-bell fs-5 text-muted"></i>
+                    <img src="https://ui-avatars.com/api/?name=@(Session["User"] ?? "Admin")&background=random" class="avatar" alt="Admin">
+                    <div style="line-height: 1.2;">
+                        <div style="font-weight: bold; font-size: 14px;">@(Session["User"] ?? "Admin Name")</div>
+                        <div style="font-size: 12px; color: #666;">@(Session["UserEmail"] ?? "admin@tourwebsite.com")</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @RenderBody()
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

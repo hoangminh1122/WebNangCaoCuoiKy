@@ -1,0 +1,72 @@
+﻿@model QUANLYDICHVUDULICH.ADMIN.Models.TourViewModel
+
+<form id="frmTour" enctype="multipart/form-data">
+    @Html.HiddenFor(m => m.MaTour)
+
+    @Html.HiddenFor(m => m.HinhAnhDaiDien)
+
+    <div class="row">
+        <div class="col-md-4 text-center mb-3">
+            <label class="form-label d-block fw-bold">Hình ảnh</label>
+
+            <div style="width: 100%; height: 180px; border: 1px dashed #ccc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #f9f9f9; margin-bottom: 10px;">
+                <img id="previewImage"
+                     src="@(string.IsNullOrEmpty(Model.HinhAnhDaiDien) ? "https://via.placeholder.com/150?text=No+Image" : Model.HinhAnhDaiDien)"
+                     style="max-width: 100%; max-height: 100%; object-fit: cover;">
+            </div>
+
+            <input type="file" id="ImageFile" name="ImageFile" class="form-control form-control-sm" accept="image/*" onchange="previewFile()">
+        </div>
+
+        <div class="col-md-8">
+            <div class="mb-3">
+                <label class="form-label">Tên Tour <span class="text-danger">*</span></label>
+                @Html.TextBoxFor(m => m.TenTour, new { @class = "form-control", required = "required" })
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Danh mục (ID)</label>
+                    @Html.TextBoxFor(m => m.MaDanhMuc, new { @class = "form-control", type = "number" })
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Thời lượng (ngày)</label>
+                    @Html.TextBoxFor(m => m.ThoiLuongNgay, new { @class = "form-control", type = "number" })
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Giá gốc (VNĐ)</label>
+                @Html.TextBoxFor(m => m.GiaGoc, new { @class = "form-control", type = "number" })
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Trạng thái</label>
+                <select name="TrangThai" class="form-control">
+                    <option value="Đang mở bán" @(Model != null && Model.TrangThai == "Đang mở bán" ? "selected" : "")>Đang mở bán</option>
+                    <option value="Hết chỗ" @(Model != null && Model.TrangThai == "Hết chỗ" ? "selected" : "")>Hết chỗ</option>
+                    <option value="Tạm ngưng" @(Model != null && Model.TrangThai == "Tạm ngưng" ? "selected" : "")>Tạm ngưng</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    // Script xem trước ảnh ngay khi chọn file
+    function previewFile() {
+        var preview = document.getElementById('previewImage');
+        var file = document.getElementById('ImageFile').files[0];
+        var reader = new FileReader();
+
+        reader.onloadend = function () {
+            preview.src = reader.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = "https://via.placeholder.com/150?text=No+Image";
+        }
+    }
+</script>

@@ -1,0 +1,185 @@
+﻿@model IEnumerable<QUANLYDICHVUDULICH.ADMIN.Models.TourViewModel>
+
+@{
+    ViewBag.Title = "Quản lý Tour";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* CSS cho ảnh nhỏ trong bảng */
+    .tour-thumb {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 6px;
+        border: 1px solid #dee2e6;
+    }
+</style>
+
+<div class="text-end mb-3">
+    <button class="btn btn-primary" onclick="openModal(0)">
+        <i class="bi bi-plus-lg"></i> Thêm Tour Mới
+    </button>
+</div>
+
+<div class="card shadow">
+    <div class="card-body">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th style="width: 80px;">Hình</th>
+                    <th>Tên Tour</th>
+                    <th>Giá</th>
+                    <th>Trạng thái</th>
+                    <th class="text-center">Tác vụ</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <!-- Sửa lại link ảnh dự phòng dùng placehold.co cho ổn định -->
+                                <img src="@(string.IsNullOrEmpty(item.HinhAnhDaiDien) ? "https://placehold.co/60x60?text=No+Img" : item.HinhAnhDaiDien)"
+                                     class="tour-thumb"
+                                     onerror="this.src='https://placehold.co/60x60?text=Error'">
+                            </td>
+                            <td class="fw-bold">@item.TenTour</td>
+                            <td class="text-primary">@string.Format("{0:N0}", item.GiaGoc)</td>
+                            <td>
+                                <span class="badge @(item.TrangThai == "Đang mở bán" ? "bg-success" : "bg-secondary")">
+                                    @item.TrangThai
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-outline-primary" onclick="openModal(@item.MaTour)">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" onclick="deleteTour(@item.MaTour)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="5" class="text-center text-muted">Không có dữ liệu</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="tourModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="modalTitle">Thông tin Tour</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <div class="text-center p-3"><div class="spinner-border text-primary"></div></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" onclick="saveTour()">Lưu lại</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <!-- Đảm bảo nạp đúng jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // 1. Mở Modal
+        function openModal(id) {
+            $('#modalTitle').text(id === 0 ? "Thêm Tour Mới" : "Cập nhật Tour");
+            var myModal = new bootstrap.Modal(document.getElementById('tourModal'));
+            myModal.show();
+
+            $.get('@Url.Action("GetModal", "Tour")', { id: id })
+                .done(function (data) {
+                    $('#modalBody').html(data);
+                })
+                .fail(function() {
+                    $('#modalBody').html('<div class="alert alert-danger">Lỗi tải form!</div>');
+                });
+        }
+
+        // 2. Lưu (FormData)
+        function saveTour() {
+            var form = document.getElementById('frmTour');
+            var formData = new FormData(form);
+
+            $.ajax({
+                url: '@Url.Action("Save", "Tour")',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    if (res.success) {
+                        $('#tourModal').modal('hide');
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành công',
+                            text: res.message,
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire('Thất bại', res.message, 'error');
+                    }
+                },
+                error: function () {
+                    Swal.fire('Lỗi', 'Không thể kết nối server (Code 500/404)', 'error');
+                }
+            });
+        }
+
+        // 3. Xóa (Đã sửa lại tối ưu)
+        function deleteTour(id) {
+            console.log("Chuẩn bị xóa ID: " + id); // Kiểm tra F12 xem có nhận ID không
+
+            Swal.fire({
+                title: 'Bạn có chắc chắn?',
+                text: "Dữ liệu sẽ bị xóa vĩnh viễn!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Xóa ngay',
+                cancelButtonText: 'Hủy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Hiển thị loading
+                    Swal.fire({ title: 'Đang xử lý...', didOpen: () => { Swal.showLoading() } });
+
+                    $.post('@Url.Action("Delete", "Tour")', { id: id })
+                        .done(function (res) {
+                            if (res.success) {
+                                Swal.fire('Đã xóa!', 'Xóa thành công.', 'success')
+                                    .then(() => location.reload());
+                            } else {
+                                Swal.fire('Lỗi', res.message || 'Không thể xóa.', 'error');
+                            }
+                        })
+                        .fail(function (xhr, status, error) {
+                            // Nếu lỗi server, nó sẽ báo ở đây
+                            console.error(error);
+                            Swal.fire('Lỗi Server', 'Kiểm tra lại API hoặc Controller.', 'error');
+                        });
+                }
+            })
+        }
+    </script>
+}
