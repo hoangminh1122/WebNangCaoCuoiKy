@@ -216,23 +216,28 @@
         <div class="brand"><i class="bi bi-flag-fill"></i> TourAdmin</div>
 
         <nav class="nav flex-column">
-            <a class="nav-link @(currentController == "Home" ? "active" : "")" href="@Url.Action("Index", "Home")">
+            <a class="nav-link @(currentController == "Home" ? "active" : "")"
+               href="@Url.Action("Index", "Home")">
                 <i class="bi bi-grid-fill"></i> Bảng điều khiển
             </a>
 
-            <a class="nav-link @(currentController == "Tour" ? "active" : "")" href="@Url.Action("Index", "Tour")">
+            <a class="nav-link @(currentController == "Tour" ? "active" : "")"
+               href="@Url.Action("Index", "Tour")">
                 <i class="bi bi-map"></i> Quản lý Tour
             </a>
 
-            <a class="nav-link @(currentController == "Order" ? "active" : "")" href="#">
+            <a class="nav-link @(currentController == "DatTour" ? "active" : "")"
+               href="@Url.Action("Index", "DatTour")">
                 <i class="bi bi-receipt"></i> Đơn đặt tour
             </a>
 
-            <a class="nav-link @(currentController == "Customer" ? "active" : "")" href="#">
+            <a class="nav-link @(currentController == "KhachHang" ? "active" : "")"
+               href="@Url.Action("Index", "KhachHang")">
                 <i class="bi bi-people"></i> Khách hàng
             </a>
 
-            <a class="nav-link @(currentController == "News" ? "active" : "")" href="#">
+            <a class="nav-link @(currentController == "TinTuc" ? "active" : "")"
+               href="@Url.Action("Index", "TinTuc")">
                 <i class="bi bi-journal-text"></i> Quản lý bài viết
             </a>
         </nav>

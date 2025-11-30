@@ -144,12 +144,18 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\DatTourController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KhachHangController.cs" />
+    <Compile Include="Controllers\TinTucController.cs" />
     <Compile Include="Controllers\TourController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DashboardViewModel.cs" />
+    <Compile Include="Models\DatTourViewModel.cs" />
+    <Compile Include="Models\KhachHangViewModel.cs" />
+    <Compile Include="Models\TinTucViewModel.cs" />
     <Compile Include="Models\TourViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -207,6 +213,11 @@
     <Content Include="Views\Tour\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Tour\_FormTour.cshtml" />
+    <Content Include="Views\DatTour\Index.cshtml" />
+    <Content Include="Views\KhachHang\Index.cshtml" />
+    <Content Include="Views\TinTuc\Create.cshtml" />
+    <Content Include="Views\TinTuc\Edit.cshtml" />
+    <Content Include="Views\TinTuc\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

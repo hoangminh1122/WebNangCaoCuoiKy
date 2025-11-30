@@ -1,0 +1,697 @@
+﻿@model QUANLYDICHVUDULICH.ADMIN.Models.TinTucViewModel
+@{
+    ViewBag.Title = "Cập nhật bài viết";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        --primary-color: #4f46e5;
+        --warning-color: #f59e0b;
+    }
+
+    .page-header-custom {
+        background: white;
+        border-radius: 16px;
+        padding: 25px 35px;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .page-header-custom h3 {
+        margin: 0;
+        color: #1e293b;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .page-header-custom h3 i {
+        color: var(--warning-color);
+        font-size: 28px;
+    }
+
+    .breadcrumb-custom {
+        background: transparent;
+        padding: 0;
+        margin: 8px 0 0 0;
+        font-size: 14px;
+    }
+
+    .content-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .form-section {
+        padding: 35px;
+    }
+
+    .sidebar-section {
+        background: #f8fafc;
+        padding: 35px;
+        border-left: 1px solid #e2e8f0;
+        min-height: 100%;
+    }
+
+    .section-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1e293b;
+        margin-bottom: 25px;
+        padding-bottom: 12px;
+        border-bottom: 3px solid var(--warning-color);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .section-title i {
+        color: var(--warning-color);
+    }
+
+    .form-label-custom {
+        font-weight: 600;
+        color: #334155;
+        margin-bottom: 8px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .form-control-custom, .form-select-custom {
+        border: 2px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 12px 16px;
+        transition: all 0.3s;
+        font-size: 15px;
+    }
+
+    .form-control-custom:focus, .form-select-custom:focus {
+        border-color: var(--warning-color);
+        box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1);
+        outline: none;
+    }
+
+    .form-control-custom::placeholder {
+        color: #94a3b8;
+    }
+
+    textarea.form-control-custom {
+        resize: vertical;
+        min-height: 120px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    #NoiDung {
+        min-height: 350px;
+        font-family: 'Courier New', monospace;
+    }
+
+    .char-counter {
+        font-size: 12px;
+        color: #94a3b8;
+        text-align: right;
+        margin-top: 5px;
+    }
+
+    .info-card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #e2e8f0;
+    }
+
+    .info-card h6 {
+        font-weight: 600;
+        color: #1e293b;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 15px;
+    }
+
+    .info-card h6 i {
+        color: var(--warning-color);
+    }
+
+    .preview-box {
+        background: white;
+        border: 2px dashed #cbd5e1;
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        min-height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+        margin-bottom: 15px;
+    }
+
+    .preview-box:hover {
+        border-color: var(--warning-color);
+        background: #fffbeb;
+    }
+
+    .preview-box img {
+        max-width: 100%;
+        max-height: 180px;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+
+    .preview-placeholder {
+        color: #94a3b8;
+    }
+
+    .preview-placeholder i {
+        font-size: 48px;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .btn-custom {
+        border: none;
+        padding: 14px 28px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 15px;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        text-decoration: none;
+    }
+
+    .btn-warning-custom {
+        background: var(--warning-gradient);
+        color: white;
+    }
+
+    .btn-warning-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+        color: white;
+    }
+
+    .btn-primary-custom {
+        background: var(--primary-gradient);
+        color: white;
+    }
+
+    .btn-primary-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+        color: white;
+    }
+
+    .btn-secondary-custom {
+        background: white;
+        color: #64748b;
+        border: 2px solid #e2e8f0;
+    }
+
+    .btn-secondary-custom:hover {
+        background: #f8fafc;
+        border-color: #cbd5e1;
+        color: #475569;
+    }
+
+    .btn-danger-custom {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        color: white;
+    }
+
+    .btn-danger-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3);
+        color: white;
+    }
+
+    .editor-toolbar {
+        background: #f8fafc;
+        padding: 10px 15px;
+        border-radius: 10px 10px 0 0;
+        border: 2px solid #e2e8f0;
+        border-bottom: none;
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .editor-btn {
+        background: white;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        padding: 6px 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 14px;
+    }
+
+    .editor-btn:hover {
+        background: var(--warning-color);
+        color: white;
+        border-color: var(--warning-color);
+    }
+
+    .editor-textarea {
+        border-radius: 0 0 10px 10px !important;
+        border-top: none !important;
+    }
+
+    .sticky-sidebar {
+        position: sticky;
+        top: 20px;
+    }
+
+    .alert-info-custom {
+        background: #dbeafe;
+        border-left: 4px solid #3b82f6;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    .alert-info-custom i {
+        color: #1e40af;
+        margin-right: 8px;
+    }
+
+    .alert-info-custom span {
+        color: #1e40af;
+        font-weight: 600;
+    }
+
+
+</style>
+
+<!-- Page Header -->
+<div class="page-header-custom">
+    <h3>
+        <i class="fas fa-edit"></i>
+        Chỉnh Sửa Bài Viết
+    </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-custom">
+            <li class="breadcrumb-item">
+                <a href="@Url.Action("Index", "Home")">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="@Url.Action("Index", "TinTuc")">Tin tức</a>
+            </li>
+            <li class="breadcrumb-item active">Chỉnh sửa</li>
+        </ol>
+    </nav>
+</div>
+
+<!-- Alert Info -->
+<div class="alert-info-custom">
+    <i class="fas fa-info-circle"></i>
+    <span>Đang chỉnh sửa bài viết:</span> @Model.TieuDe
+</div>
+
+<!-- Main Content -->
+<div class="content-card">
+    @using (Html.BeginForm("Edit", "TinTuc", FormMethod.Post, new { id = "editNewsForm" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.MaTin)
+
+        <div class="row g-0">
+            <!-- Left Column - Main Form -->
+            <div class="col-lg-8">
+                <div class="form-section">
+                    <!-- Thông tin cơ bản -->
+                    <div class="section-title">
+                        <i class="fas fa-heading"></i>
+                        Thông tin cơ bản
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label-custom">
+                            <i class="fas fa-text-width"></i>
+                            Tiêu đề bài viết
+                            <span class="text-danger">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.TieuDe, new
+                        {
+                            @class = "form-control form-control-custom",
+                            @placeholder = "Nhập tiêu đề hấp dẫn cho bài viết...",
+                            @required = "required",
+                            @maxlength = "200",
+                            @id = "TieuDe"
+                        })
+                        @Html.ValidationMessageFor(m => m.TieuDe, "", new { @class = "text-danger" })
+                        <div class="char-counter">
+                            <span id="titleCounter">0</span>/200 ký tự
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label-custom">
+                            <i class="fas fa-align-left"></i>
+                            Tóm tắt ngắn
+                        </label>
+                        @Html.TextAreaFor(m => m.TomTat, new
+                        {
+                            @class = "form-control form-control-custom",
+                            @rows = "3",
+                            @placeholder = "Viết tóm tắt ngắn gọn về nội dung bài viết...",
+                            @maxlength = "500",
+                            @id = "TomTat"
+                        })
+                        <div class="char-counter">
+                            <span id="summaryCounter">0</span>/500 ký tự
+                        </div>
+                    </div>
+
+                    <!-- Nội dung chi tiết -->
+                    <div class="section-title mt-5">
+                        <i class="fas fa-file-alt"></i>
+                        Nội dung chi tiết
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label-custom">
+                            <i class="fas fa-edit"></i>
+                            Nội dung bài viết
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="editor-toolbar">
+                            <button type="button" class="editor-btn" onclick="formatText('bold')" title="Bold">
+                                <i class="fas fa-bold"></i>
+                            </button>
+                            <button type="button" class="editor-btn" onclick="formatText('italic')" title="Italic">
+                                <i class="fas fa-italic"></i>
+                            </button>
+                            <button type="button" class="editor-btn" onclick="formatText('underline')" title="Underline">
+                                <i class="fas fa-underline"></i>
+                            </button>
+                            <button type="button" class="editor-btn" onclick="insertList()" title="Bullet List">
+                                <i class="fas fa-list-ul"></i>
+                            </button>
+                            <button type="button" class="editor-btn" onclick="insertLink()" title="Insert Link">
+                                <i class="fas fa-link"></i>
+                            </button>
+                            <button type="button" class="editor-btn" onclick="insertImage()" title="Insert Image">
+                                <i class="fas fa-image"></i>
+                            </button>
+                        </div>
+                        @Html.TextAreaFor(m => m.NoiDung, new
+                        {
+                            @class = "form-control form-control-custom editor-textarea",
+                            @placeholder = "Viết nội dung chi tiết bài viết tại đây...",
+                            @required = "required",
+                            @id = "NoiDung"
+                        })
+                        @Html.ValidationMessageFor(m => m.NoiDung, "", new { @class = "text-danger" })
+                        <div class="char-counter">
+                            <span id="contentCounter">0</span> ký tự
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Sidebar -->
+            <div class="col-lg-4">
+                <div class="sidebar-section">
+                    <div class="sticky-sidebar">
+                        <!-- Action Buttons -->
+                        <button type="submit" class="btn btn-custom btn-warning-custom mb-3" onclick="setStatus('Đăng')">
+                            <i class="fas fa-save"></i>
+                            Cập nhật & Xuất bản
+                        </button>
+
+                        <button type="submit" class="btn btn-custom btn-primary-custom mb-3" onclick="setStatus('Nháp')">
+                            <i class="fas fa-file-alt"></i>
+                            Lưu nháp
+                        </button>
+
+                        <a href="@Url.Action("Index", "TinTuc")" class="btn btn-custom btn-secondary-custom mb-3">
+                            <i class="fas fa-times"></i>
+                            Hủy bỏ
+                        </a>
+
+                        <button type="button" class="btn btn-custom btn-danger-custom mb-4" onclick="confirmDelete()">
+                            <i class="fas fa-trash-alt"></i>
+                            Xóa bài viết
+                        </button>
+
+                        <!-- Preview Image -->
+                        <div class="info-card">
+                            <h6>
+                                <i class="fas fa-image"></i>
+                                Hình ảnh đại diện
+                            </h6>
+                            <div class="preview-box" id="imagePreview">
+                                @if (!string.IsNullOrEmpty(Model.HinhAnh))
+                                {
+                                    <img src="@Model.HinhAnh" alt="Current Image">
+                                }
+                                else
+                                {
+                                    <div class="preview-placeholder">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <div>Chưa có ảnh</div>
+                                    </div>
+                                }
+                            </div>
+
+                            <!-- Upload File Button -->
+                            <label for="fileUpload" class="btn btn-custom btn-secondary-custom mb-3" style="cursor: pointer;">
+                                <i class="fas fa-upload"></i>
+                                Thay đổi ảnh
+                            </label>
+                            <input type="file" id="fileUpload" accept="image/*" style="display: none;" onchange="handleFileUpload(this)">
+
+                            <!-- URL Input -->
+                            <div class="mb-2">
+                                <label class="form-label-custom" style="font-size: 13px;">Hoặc nhập URL ảnh:</label>
+                                @Html.TextBoxFor(m => m.HinhAnh, new
+                                {
+                                    @class = "form-control form-control-custom",
+                                    @placeholder = "https://example.com/image.jpg",
+                                    @id = "HinhAnh",
+                                    @onchange = "previewImageFromUrl(this.value)"
+                                })
+                            </div>
+                            <small class="text-muted d-block">
+                                <i class="fas fa-info-circle"></i> Kích thước khuyến nghị: 1200x630px
+                            </small>
+                        </div>
+
+                        <!-- Hidden Status Field -->
+                        @Html.HiddenFor(m => m.TrangThai, new { @id = "TrangThai" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Delete Form (Hidden) -->
+@using (Html.BeginForm("Delete", "TinTuc", FormMethod.Post, new { id = "deleteForm", style = "display:none;" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.MaTin)
+}
+
+@section Scripts {
+    <script>
+        // Character counters
+        $(document).ready(function() {
+            // Initialize counters with existing content
+            updateCounter('TieuDe', 'titleCounter');
+            updateCounter('TomTat', 'summaryCounter');
+            updateCounter('NoiDung', 'contentCounter');
+
+            // Attach event listeners
+            $('#TieuDe').on('input', function() {
+                updateCounter('TieuDe', 'titleCounter');
+            });
+
+            $('#TomTat').on('input', function() {
+                updateCounter('TomTat', 'summaryCounter');
+            });
+
+            $('#NoiDung').on('input', function() {
+                updateCounter('NoiDung', 'contentCounter');
+            });
+        });
+
+        function updateCounter(inputId, counterId) {
+            var length = $('#' + inputId).val().length;
+            $('#' + counterId).text(length);
+        }
+
+        // Image preview from URL with CORS handling
+        function previewImageFromUrl(url) {
+            var preview = document.getElementById('imagePreview');
+            if (url && url.trim() !== '') {
+                var img = new Image();
+
+                img.onload = function() {
+                    preview.innerHTML = '<img src="' + url + '" alt="Preview">';
+                };
+
+                img.onerror = function() {
+                    preview.innerHTML = '<div class="preview-placeholder text-warning"><i class="fas fa-exclamation-triangle"></i><div>Không thể tải ảnh từ URL này</div><small>Thử sử dụng upload ảnh từ máy</small></div>';
+                };
+
+                img.crossOrigin = "anonymous";
+                img.src = url;
+            } else {
+                preview.innerHTML = '<div class="preview-placeholder"><i class="fas fa-cloud-upload-alt"></i><div>Chưa có ảnh</div></div>';
+            }
+        }
+
+        // Handle file upload from computer
+        function handleFileUpload(input) {
+            if (input.files && input.files[0]) {
+                var file = input.files[0];
+
+                if (!file.type.match('image.*')) {
+                    alert('Vui lòng chọn file ảnh!');
+                    return;
+                }
+
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('Kích thước ảnh không được vượt quá 5MB!');
+                    return;
+                }
+
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    var preview = document.getElementById('imagePreview');
+                    preview.innerHTML = '<img src="' + e.target.result + '" alt="Preview">';
+                    $('#HinhAnh').val(e.target.result);
+                };
+
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Set status before form submit
+        function setStatus(status) {
+            document.getElementById('TrangThai').value = status;
+        }
+
+        // Confirm delete
+        function confirmDelete() {
+            if (confirm('Bạn có chắc chắn muốn xóa bài viết này?\n\nHành động này không thể hoàn tác!')) {
+                document.getElementById('deleteForm').submit();
+            }
+        }
+
+        // Editor functions
+        function formatText(command) {
+            var textarea = document.getElementById('NoiDung');
+            var start = textarea.selectionStart;
+            var end = textarea.selectionEnd;
+            var selectedText = textarea.value.substring(start, end);
+
+            var formattedText = '';
+            switch(command) {
+                case 'bold':
+                    formattedText = '**' + selectedText + '**';
+                    break;
+                case 'italic':
+                    formattedText = '*' + selectedText + '*';
+                    break;
+                case 'underline':
+                    formattedText = '<u>' + selectedText + '</u>';
+                    break;
+            }
+
+            textarea.value = textarea.value.substring(0, start) + formattedText + textarea.value.substring(end);
+            textarea.focus();
+            textarea.selectionStart = textarea.selectionEnd = start + formattedText.length;
+            updateCounter('NoiDung', 'contentCounter');
+        }
+
+        function insertList() {
+            var textarea = document.getElementById('NoiDung');
+            var text = '\n- Mục 1\n- Mục 2\n- Mục 3\n';
+            insertAtCursor(textarea, text);
+        }
+
+        function insertLink() {
+            var url = prompt('Nhập URL:');
+            var text = prompt('Nhập text hiển thị:');
+            if (url && text) {
+                var textarea = document.getElementById('NoiDung');
+                insertAtCursor(textarea, '[' + text + '](' + url + ')');
+            }
+        }
+
+        function insertImage() {
+            var url = prompt('Nhập URL hình ảnh:');
+            if (url) {
+                var textarea = document.getElementById('NoiDung');
+                insertAtCursor(textarea, '\n![Mô tả ảnh](' + url + ')\n');
+            }
+        }
+
+        function insertAtCursor(textarea, text) {
+            var start = textarea.selectionStart;
+            var end = textarea.selectionEnd;
+            textarea.value = textarea.value.substring(0, start) + text + textarea.value.substring(end);
+            textarea.focus();
+            textarea.selectionStart = textarea.selectionEnd = start + text.length;
+            updateCounter('NoiDung', 'contentCounter');
+        }
+
+        // Form validation
+        $('#editNewsForm').on('submit', function(e) {
+            var tieuDe = $('#TieuDe').val().trim();
+            var noiDung = $('#NoiDung').val().trim();
+
+            if (tieuDe === '') {
+                alert('Vui lòng nhập tiêu đề bài viết!');
+                $('#TieuDe').focus();
+                e.preventDefault();
+                return false;
+            }
+
+            if (noiDung === '') {
+                alert('Vui lòng nhập nội dung bài viết!');
+                $('#NoiDung').focus();
+                e.preventDefault();
+                return false;
+            }
+
+            return true;
+        });
+
+        // Warn before leaving page with unsaved changes
+        var formChanged = false;
+        $('#editNewsForm').on('change', 'input, textarea, select', function() {
+            formChanged = true;
+        });
+
+        $(window).on('beforeunload', function() {
+            if (formChanged) {
+                return 'Bạn có thay đổi chưa được lưu. Bạn có chắc muốn rời khỏi trang?';
+            }
+        });
+
+        $('#editNewsForm').on('submit', function() {
+            formChanged = false;
+        });
+    </script>
+}

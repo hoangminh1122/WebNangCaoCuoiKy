@@ -1,0 +1,327 @@
+﻿@model IEnumerable<QUANLYDICHVUDULICH.ADMIN.Models.TinTucViewModel>
+
+@{
+    ViewBag.Title = "Quản lý Bài viết";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+<style>
+    /* --- GIỮ NGUYÊN CSS CŨ CỦA BẠN --- */
+    body {
+        background-color: #f5f7fa;
+    }
+
+    .page-header-block {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .page-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin: 0;
+    }
+
+    .page-subtitle {
+        color: #6c757d;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    .btn-add-new {
+        background-color: #0d6efd;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: 0.3s;
+        border: none;
+    }
+
+        .btn-add-new:hover {
+            background-color: #0b5ed7;
+            color: white;
+            text-decoration: none;
+        }
+
+    .content-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        padding: 20px;
+    }
+
+    .filter-bar {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .search-box {
+        flex-grow: 1;
+        position: relative;
+    }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            background-color: #f8f9fa;
+            outline: none;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #adb5bd;
+        }
+
+    .filter-dropdown {
+        padding: 10px 15px;
+        border: 1px solid #e9ecef;
+        border-radius: 6px;
+        background-color: white;
+        color: #495057;
+        min-width: 150px;
+    }
+
+    .custom-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+        .custom-table th {
+            text-transform: uppercase;
+            font-size: 12px;
+            color: #adb5bd;
+            font-weight: 600;
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            text-align: left;
+        }
+
+        .custom-table td {
+            padding: 15px;
+            vertical-align: middle;
+            border-bottom: 1px solid #edf2f7;
+            color: #343a40;
+            font-size: 14px;
+        }
+
+    .status-badge {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    .status-published {
+        background-color: #d1e7dd;
+        color: #0f5132;
+    }
+
+    .status-draft {
+        background-color: #fff3cd;
+        color: #664d03;
+    }
+
+    .status-pending {
+        background-color: #cff4fc;
+        color: #055160;
+    }
+
+    .status-hidden {
+        background-color: #f8d7da;
+        color: #842029;
+    }
+
+    .action-btn {
+        color: #6c757d;
+        margin: 0 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.2s;
+        text-decoration: none;
+        border: none;
+        background: none;
+    }
+
+        .action-btn:hover {
+            color: #0d6efd;
+        }
+
+        .action-btn.delete:hover {
+            color: #dc3545;
+        }
+
+    .post-title {
+        font-weight: 600;
+        color: #212529;
+    }
+</style>
+
+<div class="page-header-block">
+    <div>
+        <p class="page-subtitle">Danh sách tin tức, blog du lịch và khuyến mãi.</p>
+    </div>
+    <a href="@Url.Action("Create")" class="btn-add-new">
+        <i class="fas fa-plus"></i> Thêm bài viết
+    </a>
+</div>
+
+<div class="content-card">
+
+    <div class="filter-bar">
+        @using (Html.BeginForm("Index", "TinTuc", FormMethod.Get, new { style = "flex-grow:1; display:flex; gap:15px;" }))
+        {
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" name="searchString" placeholder="Tìm kiếm theo tiêu đề bài viết..." value="@Request.QueryString["searchString"]">
+            </div>
+
+            <select class="filter-dropdown" name="category">
+                <option value="">-- Tất cả danh mục --</option>
+                <option value="Tin tức">Tin tức</option>
+                <option value="Khuyến mãi">Khuyến mãi</option>
+                <option value="Kinh nghiệm">Kinh nghiệm du lịch</option>
+            </select>
+
+            <button type="submit" style="display:none"></button>
+        }
+    </div>
+
+    <table class="custom-table">
+        <thead>
+            <tr>
+                <th style="width: 40px;"><input type="checkbox"></th>
+                <th>Tiêu đề bài viết</th>
+                <th>Danh mục</th>
+                <th>Tác giả</th>
+                <th>Ngày đăng</th>
+                <th>Trạng thái</th>
+                <th style="text-align: right;">Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="post-title">@item.TieuDe</div>
+                        </td>
+                        <td>@item.DanhMuc</td>
+                        <td>
+                            <i class="far fa-user-circle"></i> @item.TacGia
+                        </td>
+                        <td>
+                            @String.Format("{0:dd/MM/yyyy}", item.NgayDang)
+                        </td>
+                        <td>
+                            @if (item.TrangThai == "Đã xuất bản" || item.TrangThai == "Hiện")
+                            {
+                                <span class="status-badge status-published">@item.TrangThai</span>
+                            }
+                            else if (item.TrangThai == "Bản nháp")
+                            {
+                                <span class="status-badge status-draft">@item.TrangThai</span>
+                            }
+                            else if (item.TrangThai == "Ẩn")
+                            {
+                                <span class="status-badge status-hidden">@item.TrangThai</span>
+                            }
+                            else
+                            {
+                                <span class="status-badge status-pending">@item.TrangThai</span>
+                            }
+                        </td>
+                        <td style="text-align: right;">
+                            <a href="@Url.Action("Edit", new { id = item.MaTin })" class="action-btn" title="Sửa"><i class="fas fa-pen"></i></a>
+
+                            <button type="button" class="action-btn delete" title="Xóa" onclick="deleteTinTuc(@item.MaTin)">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7" style="text-align:center; padding: 30px; color: #999;">
+                        <i class="fas fa-inbox" style="font-size: 40px; margin-bottom: 10px;"></i><br />
+                        Không tìm thấy bài viết nào.
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; color: #6c757d; font-size: 14px;">
+        <div>Hiển thị @(Model != null ? Model.Count() : 0) kết quả</div>
+        <div>
+            <button style="border:none; background:none; color:#adb5bd;"><i class="fas fa-chevron-left"></i></button>
+            <span style="background: #0d6efd; color: white; padding: 5px 12px; border-radius: 4px; margin: 0 5px;">1</span>
+            <button style="border:none; background:none; color:#adb5bd;"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // Hàm Xóa Tin Tức (Sử dụng SweetAlert2 và AJAX)
+        function deleteTinTuc(id) {
+            Swal.fire({
+                title: 'Xóa bài viết này?',
+                text: "Dữ liệu sẽ bị xóa vĩnh viễn và không thể khôi phục!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Xóa ngay',
+                cancelButtonText: 'Hủy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Hiển thị loading khi đang xử lý
+                    Swal.fire({ title: 'Đang xử lý...', showConfirmButton: false, didOpen: () => { Swal.showLoading() } });
+
+                    // Gọi AJAX đến Controller TinTuc/Delete
+                    $.post('@Url.Action("Delete", "TinTuc")', { id: id })
+                        .done(function (res) {
+                            if (res.success) {
+                                Swal.fire(
+                                    'Đã xóa!',
+                                    'Bài viết đã được xóa thành công.',
+                                    'success'
+                                ).then(() => {
+                                    location.reload(); // Tải lại trang để cập nhật danh sách
+                                });
+                            } else {
+                                Swal.fire('Lỗi', res.message || 'Không thể xóa bài viết này.', 'error');
+                            }
+                        })
+                        .fail(function (xhr) {
+                            console.error(xhr);
+                            Swal.fire('Lỗi Server', 'Không thể kết nối đến máy chủ.', 'error');
+                        });
+                }
+            })
+        }
+    </script>
+}

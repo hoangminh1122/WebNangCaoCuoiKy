@@ -1,29 +1,36 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH\\",
+  "WorkspaceRootPath": "D:\\Documents\\SourceTree_AndroidDEV\\WebNangCaoCuoiKy\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{97EA9C04-CE8A-40E2-A37F-B28BF7D71DAF}|..\\QUANLYDICHVUDULICH.ADMIN\\QUANLYDICHVUDULICH.ADMIN.csproj|d:\\kyhoc125\\web n\u00E2ng cao\\webquanlydichvudulich\\quanlydichvudulich.admin\\models\\tourviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{97EA9C04-CE8A-40E2-A37F-B28BF7D71DAF}|..\\QUANLYDICHVUDULICH.ADMIN\\QUANLYDICHVUDULICH.ADMIN.csproj|d:\\documents\\sourcetree_androiddev\\webnangcaocuoiky\\webquanlydichvudulich\\quanlydichvudulich.admin\\controllers\\tintuccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AEE753B6-C10E-4A7C-9A25-5623646CC4FB}|QUANLYDICHVUDULICH.API.csproj|d:\\kyhoc125\\web n\u00E2ng cao\\webquanlydichvudulich\\quanlydichvudulich\\models\\tourmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AEE753B6-C10E-4A7C-9A25-5623646CC4FB}|QUANLYDICHVUDULICH.API.csproj|solutionrelative:models\\tourmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{AEE753B6-C10E-4A7C-9A25-5623646CC4FB}|QUANLYDICHVUDULICH.API.csproj|d:\\documents\\sourcetree_androiddev\\webnangcaocuoiky\\webquanlydichvudulich\\quanlydichvudulich\\controllers\\admintintuccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AEE753B6-C10E-4A7C-9A25-5623646CC4FB}|QUANLYDICHVUDULICH.API.csproj|solutionrelative:controllers\\admintintuccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{97EA9C04-CE8A-40E2-A37F-B28BF7D71DAF}|..\\QUANLYDICHVUDULICH.ADMIN\\QUANLYDICHVUDULICH.ADMIN.csproj|d:\\kyhoc125\\web n\u00E2ng cao\\webquanlydichvudulich\\quanlydichvudulich.admin\\views\\tour\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{97EA9C04-CE8A-40E2-A37F-B28BF7D71DAF}|..\\QUANLYDICHVUDULICH.ADMIN\\QUANLYDICHVUDULICH.ADMIN.csproj|d:\\documents\\sourcetree_androiddev\\webnangcaocuoiky\\webquanlydichvudulich\\quanlydichvudulich.admin\\models\\tintucviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AEE753B6-C10E-4A7C-9A25-5623646CC4FB}|QUANLYDICHVUDULICH.API.csproj|d:\\kyhoc125\\web n\u00E2ng cao\\webquanlydichvudulich\\quanlydichvudulich\\controllers\\admintourcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AEE753B6-C10E-4A7C-9A25-5623646CC4FB}|QUANLYDICHVUDULICH.API.csproj|solutionrelative:controllers\\admintourcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{AEE753B6-C10E-4A7C-9A25-5623646CC4FB}|QUANLYDICHVUDULICH.API.csproj|d:\\documents\\sourcetree_androiddev\\webnangcaocuoiky\\webquanlydichvudulich\\quanlydichvudulich\\models\\tintucdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AEE753B6-C10E-4A7C-9A25-5623646CC4FB}|QUANLYDICHVUDULICH.API.csproj|solutionrelative:models\\tintucdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{97EA9C04-CE8A-40E2-A37F-B28BF7D71DAF}|..\\QUANLYDICHVUDULICH.ADMIN\\QUANLYDICHVUDULICH.ADMIN.csproj|d:\\kyhoc125\\web n\u00E2ng cao\\webquanlydichvudulich\\quanlydichvudulich.admin\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{97EA9C04-CE8A-40E2-A37F-B28BF7D71DAF}|..\\QUANLYDICHVUDULICH.ADMIN\\QUANLYDICHVUDULICH.ADMIN.csproj|d:\\documents\\sourcetree_androiddev\\webnangcaocuoiky\\webquanlydichvudulich\\quanlydichvudulich.admin\\controllers\\dattourcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{97EA9C04-CE8A-40E2-A37F-B28BF7D71DAF}|..\\QUANLYDICHVUDULICH.ADMIN\\QUANLYDICHVUDULICH.ADMIN.csproj|d:\\kyhoc125\\web n\u00E2ng cao\\webquanlydichvudulich\\quanlydichvudulich.admin\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{AEE753B6-C10E-4A7C-9A25-5623646CC4FB}|QUANLYDICHVUDULICH.API.csproj|d:\\documents\\sourcetree_androiddev\\webnangcaocuoiky\\webquanlydichvudulich\\quanlydichvudulich\\controllers\\admindattourcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AEE753B6-C10E-4A7C-9A25-5623646CC4FB}|QUANLYDICHVUDULICH.API.csproj|solutionrelative:controllers\\admindattourcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{97EA9C04-CE8A-40E2-A37F-B28BF7D71DAF}|..\\QUANLYDICHVUDULICH.ADMIN\\QUANLYDICHVUDULICH.ADMIN.csproj|d:\\kyhoc125\\web n\u00E2ng cao\\webquanlydichvudulich\\quanlydichvudulich.admin\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+      "AbsoluteMoniker": "D:0:0:{97EA9C04-CE8A-40E2-A37F-B28BF7D71DAF}|..\\QUANLYDICHVUDULICH.ADMIN\\QUANLYDICHVUDULICH.ADMIN.csproj|d:\\documents\\sourcetree_androiddev\\webnangcaocuoiky\\webquanlydichvudulich\\quanlydichvudulich.admin\\views\\tintuc\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97EA9C04-CE8A-40E2-A37F-B28BF7D71DAF}|..\\QUANLYDICHVUDULICH.ADMIN\\QUANLYDICHVUDULICH.ADMIN.csproj|d:\\documents\\sourcetree_androiddev\\webnangcaocuoiky\\webquanlydichvudulich\\quanlydichvudulich.admin\\views\\dattour\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97EA9C04-CE8A-40E2-A37F-B28BF7D71DAF}|..\\QUANLYDICHVUDULICH.ADMIN\\QUANLYDICHVUDULICH.ADMIN.csproj|d:\\documents\\sourcetree_androiddev\\webnangcaocuoiky\\webquanlydichvudulich\\quanlydichvudulich.admin\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -33,7 +40,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -45,93 +52,119 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "TourViewModel.cs",
-              "DocumentMoniker": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Models\\TourViewModel.cs",
-              "RelativeDocumentMoniker": "..\\QUANLYDICHVUDULICH.ADMIN\\Models\\TourViewModel.cs",
-              "ToolTip": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Models\\TourViewModel.cs",
-              "RelativeToolTip": "..\\QUANLYDICHVUDULICH.ADMIN\\Models\\TourViewModel.cs",
+              "DocumentIndex": 2,
+              "Title": "TinTucViewModel.cs",
+              "DocumentMoniker": "D:\\Documents\\SourceTree_AndroidDEV\\WebNangCaoCuoiKy\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Models\\TinTucViewModel.cs",
+              "RelativeDocumentMoniker": "..\\QUANLYDICHVUDULICH.ADMIN\\Models\\TinTucViewModel.cs",
+              "ToolTip": "D:\\Documents\\SourceTree_AndroidDEV\\WebNangCaoCuoiKy\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Models\\TinTucViewModel.cs",
+              "RelativeToolTip": "..\\QUANLYDICHVUDULICH.ADMIN\\Models\\TinTucViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T13:03:46.217Z",
+              "WhenOpened": "2025-11-30T15:21:46.812Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "TourModel.cs",
-              "DocumentMoniker": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH\\Models\\TourModel.cs",
-              "RelativeDocumentMoniker": "Models\\TourModel.cs",
-              "ToolTip": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH\\Models\\TourModel.cs",
-              "RelativeToolTip": "Models\\TourModel.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAAwAwAAAAyAAAAAAAAAA==",
+              "Title": "AdminTinTucController.cs",
+              "DocumentMoniker": "D:\\Documents\\SourceTree_AndroidDEV\\WebNangCaoCuoiKy\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH\\Controllers\\AdminTinTucController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AdminTinTucController.cs",
+              "ToolTip": "D:\\Documents\\SourceTree_AndroidDEV\\WebNangCaoCuoiKy\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH\\Controllers\\AdminTinTucController.cs",
+              "RelativeToolTip": "Controllers\\AdminTinTucController.cs",
+              "ViewState": "AgIAAHwAAAAAAAAAAAAkwAsAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T13:03:19.096Z",
+              "WhenOpened": "2025-11-30T15:16:26.066Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "..\\QUANLYDICHVUDULICH.ADMIN\\Views\\Home\\Index.cshtml",
-              "ToolTip": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "..\\QUANLYDICHVUDULICH.ADMIN\\Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-30T13:00:05.656Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Views\\Tour\\Index.cshtml",
-              "RelativeDocumentMoniker": "..\\QUANLYDICHVUDULICH.ADMIN\\Views\\Tour\\Index.cshtml",
-              "ToolTip": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Views\\Tour\\Index.cshtml",
-              "RelativeToolTip": "..\\QUANLYDICHVUDULICH.ADMIN\\Views\\Tour\\Index.cshtml",
-              "ViewState": "AgIAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-30T12:59:59.913Z",
+              "Title": "AdminDatTourController.cs",
+              "DocumentMoniker": "D:\\Documents\\SourceTree_AndroidDEV\\WebNangCaoCuoiKy\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH\\Controllers\\AdminDatTourController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AdminDatTourController.cs",
+              "ToolTip": "D:\\Documents\\SourceTree_AndroidDEV\\WebNangCaoCuoiKy\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH\\Controllers\\AdminDatTourController.cs",
+              "RelativeToolTip": "Controllers\\AdminDatTourController.cs",
+              "ViewState": "AgIAAGEAAAAAAAAAAAAAAHAAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-30T15:09:42.221Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "..\\QUANLYDICHVUDULICH.ADMIN\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "..\\QUANLYDICHVUDULICH.ADMIN\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAANMAAAAAAAAAAAAAAO0AAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-30T12:59:44.131Z",
+              "Title": "DatTourController.cs",
+              "DocumentMoniker": "D:\\Documents\\SourceTree_AndroidDEV\\WebNangCaoCuoiKy\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Controllers\\DatTourController.cs",
+              "RelativeDocumentMoniker": "..\\QUANLYDICHVUDULICH.ADMIN\\Controllers\\DatTourController.cs",
+              "ToolTip": "D:\\Documents\\SourceTree_AndroidDEV\\WebNangCaoCuoiKy\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Controllers\\DatTourController.cs",
+              "RelativeToolTip": "..\\QUANLYDICHVUDULICH.ADMIN\\Controllers\\DatTourController.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAAwFMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-30T15:08:19.365Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Web.config",
-              "DocumentMoniker": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Web.config",
-              "RelativeDocumentMoniker": "..\\QUANLYDICHVUDULICH.ADMIN\\Web.config",
-              "ToolTip": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Web.config",
-              "RelativeToolTip": "..\\QUANLYDICHVUDULICH.ADMIN\\Web.config",
-              "ViewState": "AgIAABgAAAAAAAAAAAAiwDAAAABUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2025-11-30T12:53:35.529Z",
+              "DocumentIndex": 0,
+              "Title": "TinTucController.cs",
+              "DocumentMoniker": "D:\\Documents\\SourceTree_AndroidDEV\\WebNangCaoCuoiKy\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Controllers\\TinTucController.cs",
+              "RelativeDocumentMoniker": "..\\QUANLYDICHVUDULICH.ADMIN\\Controllers\\TinTucController.cs",
+              "ToolTip": "D:\\Documents\\SourceTree_AndroidDEV\\WebNangCaoCuoiKy\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Controllers\\TinTucController.cs",
+              "RelativeToolTip": "..\\QUANLYDICHVUDULICH.ADMIN\\Controllers\\TinTucController.cs",
+              "ViewState": "AgIAAEYAAAAAAAAAAAAkwFQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-30T15:03:21.181Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "AdminTourController.cs",
-              "DocumentMoniker": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH\\Controllers\\AdminTourController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AdminTourController.cs",
-              "ToolTip": "D:\\KyHoc125\\Web n\u00E2ng cao\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH\\Controllers\\AdminTourController.cs",
-              "RelativeToolTip": "Controllers\\AdminTourController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAUAAAAAAAAAA==",
+              "Title": "TinTucDTO.cs",
+              "DocumentMoniker": "D:\\Documents\\SourceTree_AndroidDEV\\WebNangCaoCuoiKy\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH\\Models\\TinTucDTO.cs",
+              "RelativeDocumentMoniker": "Models\\TinTucDTO.cs",
+              "ToolTip": "D:\\Documents\\SourceTree_AndroidDEV\\WebNangCaoCuoiKy\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH\\Models\\TinTucDTO.cs",
+              "RelativeToolTip": "Models\\TinTucDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T12:46:18.213Z",
+              "WhenOpened": "2025-11-30T15:21:06.446Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Documents\\SourceTree_AndroidDEV\\WebNangCaoCuoiKy\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Views\\TinTuc\\Index.cshtml",
+              "RelativeDocumentMoniker": "..\\QUANLYDICHVUDULICH.ADMIN\\Views\\TinTuc\\Index.cshtml",
+              "ToolTip": "D:\\Documents\\SourceTree_AndroidDEV\\WebNangCaoCuoiKy\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Views\\TinTuc\\Index.cshtml",
+              "RelativeToolTip": "..\\QUANLYDICHVUDULICH.ADMIN\\Views\\TinTuc\\Index.cshtml",
+              "ViewState": "AgIAACMBAAAAAAAAAAAiwEYBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-30T15:01:08.942Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Documents\\SourceTree_AndroidDEV\\WebNangCaoCuoiKy\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Views\\DatTour\\Index.cshtml",
+              "RelativeDocumentMoniker": "..\\QUANLYDICHVUDULICH.ADMIN\\Views\\DatTour\\Index.cshtml",
+              "ToolTip": "D:\\Documents\\SourceTree_AndroidDEV\\WebNangCaoCuoiKy\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Views\\DatTour\\Index.cshtml",
+              "RelativeToolTip": "..\\QUANLYDICHVUDULICH.ADMIN\\Views\\DatTour\\Index.cshtml",
+              "ViewState": "AgIAACUBAAAAAAAAAAAiwEgBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-30T15:00:44.222Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\Documents\\SourceTree_AndroidDEV\\WebNangCaoCuoiKy\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "..\\QUANLYDICHVUDULICH.ADMIN\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\Documents\\SourceTree_AndroidDEV\\WebNangCaoCuoiKy\\WebQuanLyDichVuDuLich\\QUANLYDICHVUDULICH.ADMIN\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "..\\QUANLYDICHVUDULICH.ADMIN\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAANYAAAAAAAAAAAAAAPIAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-30T14:56:23.013Z",
               "EditorCaption": ""
             }
           ]
