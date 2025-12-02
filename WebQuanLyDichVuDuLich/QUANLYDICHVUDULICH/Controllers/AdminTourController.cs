@@ -106,25 +106,42 @@ new SqlParameter("@TrangThai", tour.TrangThai ?? "Đang mở bán")
             }
         }
 
-        // 4. DELETE: Xóa Tour
         [HttpDelete]
-        [Route("api/admintour/{id}")]
+        [Route("api/admintour/delete/{id}")] // Đổi thành delete/{id} cho rõ nghĩa và khớp với Frontend
         public IHttpActionResult DeleteTour(int id)
         {
             try
             {
-                string sql = "DELETE FROM Tour WHERE MaTour = @id";
-                // Dùng tham số @id an toàn
-                ExecuteNonQuery(sql, new SqlParameter[] { new SqlParameter("@id", id) }, false);
-                return Ok("Đã xóa");
+                // BƯỚC 1: Xóa các dữ liệu phụ liên quan trước (để tránh lỗi Khóa ngoại)
+                // Lưu ý: Nếu trong SQL bạn đã set ON DELETE CASCADE thì không cần bước này, nhưng viết ra cho chắc ăn
+
+                // 1. Xóa trong bảng ThanhToan (liên quan đến DatTour)
+                string sqlDelThanhToan = "DELETE FROM ThanhToan WHERE MaDatTour IN (SELECT MaDatTour FROM DatTour WHERE MaTour = @id)";
+                ExecuteNonQuery(sqlDelThanhToan, new SqlParameter[] { new SqlParameter("@id", id) }, false);
+
+                // 2. Xóa trong bảng DatTour (Những người đã đặt tour này)
+                string sqlDelDatTour = "DELETE FROM DatTour WHERE MaTour = @id";
+                ExecuteNonQuery(sqlDelDatTour, new SqlParameter[] { new SqlParameter("@id", id) }, false);
+
+                // 3. Xóa Hình ảnh, Đánh giá, Dịch vụ đi kèm...
+                ExecuteNonQuery("DELETE FROM TourHinhAnh WHERE MaTour = @id", new SqlParameter[] { new SqlParameter("@id", id) }, false);
+                ExecuteNonQuery("DELETE FROM Tour_DichVu WHERE MaTour = @id", new SqlParameter[] { new SqlParameter("@id", id) }, false);
+                ExecuteNonQuery("DELETE FROM Tour_KhuyenMai WHERE MaTour = @id", new SqlParameter[] { new SqlParameter("@id", id) }, false);
+                ExecuteNonQuery("DELETE FROM DanhGia WHERE MaTour = @id", new SqlParameter[] { new SqlParameter("@id", id) }, false);
+
+                // BƯỚC 2: Cuối cùng mới xóa Tour chính
+                string sqlDelTour = "DELETE FROM Tour WHERE MaTour = @id";
+                int rows = ExecuteNonQuery(sqlDelTour, new SqlParameter[] { new SqlParameter("@id", id) }, false);
+
+                if (rows > 0)
+                    return Ok("Đã xóa thành công tour và các dữ liệu liên quan.");
+                else
+                    return BadRequest("Tour không tồn tại hoặc đã bị xóa trước đó.");
             }
             catch (Exception ex)
             {
-                // Bắt lỗi ràng buộc khóa ngoại (Foreign Key)
-                if (ex.Message.Contains("REFERENCE"))
-                    return BadRequest("Không thể xóa Tour này vì đang có đơn đặt hàng!");
-
-                return BadRequest("Lỗi xóa: " + ex.Message);
+                // Trả về lỗi chi tiết
+                return BadRequest("Lỗi SQL: " + ex.Message);
             }
         }
 
