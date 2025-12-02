@@ -240,6 +240,11 @@
                href="@Url.Action("Index", "TinTuc")">
                 <i class="bi bi-journal-text"></i> Quản lý bài viết
             </a>
+
+            <a class="nav-link @(currentController == "Chat" ? "active" : "")"
+               href="@Url.Action("Index", "Chat")">
+                <i class="bi bi-chat-dots-fill"></i> Hỗ trợ khách hàng
+            </a>
         </nav>
 
         <a href="/Account/Logout" class="nav-link logout-btn text-danger">

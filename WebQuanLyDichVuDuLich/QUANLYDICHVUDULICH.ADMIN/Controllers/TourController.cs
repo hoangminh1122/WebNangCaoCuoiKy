@@ -9,99 +9,123 @@ namespace QUANLYDICHVUDULICH.ADMIN.Controllers
 {
     public class TourController : BaseController
     {
+        // 1. LẤY DANH SÁCH TOUR (Kèm chức năng tìm kiếm)
         public ActionResult Index(string searchString)
         {
             try
             {
-                // 1. Gọi API lấy toàn bộ danh sách
+                // Gọi API lấy toàn bộ danh sách
                 var tours = GetFromApi<List<TourViewModel>>("api/admintour");
-
-                // 2. Nếu API trả về null (lỗi hoặc rỗng), khởi tạo list mới để tránh lỗi NullReference
                 if (tours == null) tours = new List<TourViewModel>();
 
-                // 3. XỬ LÝ TÌM KIẾM (Chuẩn hóa chuỗi)
+                // XỬ LÝ TÌM KIẾM
                 if (!string.IsNullOrEmpty(searchString))
                 {
-                    searchString = searchString.Trim().ToLower(); // Xóa khoảng trắng thừa, chuyển thường
-
-                    // Lọc theo Tên Tour HOẶC Mã Tour
+                    searchString = searchString.Trim().ToLower();
+                    // Lọc theo Tên Tour hoặc Mã Tour
                     tours = tours.FindAll(t =>
                         (t.TenTour != null && t.TenTour.ToLower().Contains(searchString)) ||
                         t.MaTour.ToString().Contains(searchString)
                     );
                 }
 
-                // 4. Trả về View (Đảm bảo Model là IEnumerable<TourViewModel>)
                 return View(tours);
             }
             catch
             {
+                // Trả về list rỗng nếu lỗi kết nối để không chết trang web
                 return View(new List<TourViewModel>());
             }
         }
 
-        // 2. Trả về Form (Modal) - GIỮ NGUYÊN
-        public ActionResult GetModal(int? id)
+        // 2. LẤY CHI TIẾT 1 TOUR (Trả về JSON để điền vào Form Sửa)
+        // Hàm này thay thế cho GetModal cũ
+        [HttpGet]
+        public ActionResult GetJsonTour(int id)
         {
-            TourViewModel model = new TourViewModel();
-            if (id.HasValue && id.Value > 0)
+            try
             {
-                var tourFromApi = GetFromApi<TourViewModel>("api/admintour/" + id);
-                if (tourFromApi != null) model = tourFromApi;
+                var tour = GetFromApi<TourViewModel>("api/admintour/" + id);
+                if (tour != null)
+                {
+                    // Trả về JSON cho Javascript đọc
+                    return Json(tour, JsonRequestBehavior.AllowGet);
+                }
+                return Json(null, JsonRequestBehavior.AllowGet);
             }
-            return PartialView("_FormTour", model);
+            catch
+            {
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
         }
 
-        // 3. LƯU DỮ LIỆU (CÓ XỬ LÝ UPLOAD ẢNH) - GIỮ NGUYÊN
+        // 3. LƯU DỮ LIỆU (Thêm mới hoặc Cập nhật)
         [HttpPost]
+        // ValidateInput(false) để cho phép lưu nội dung HTML (nếu có dùng CKEditor cho mô tả)
+        [ValidateInput(false)]
         public ActionResult Save(TourViewModel tour)
         {
-            // --- XỬ LÝ FILE UPLOAD ---
-            var file = Request.Files["ImageFile"];
-            if (file != null && file.ContentLength > 0)
+            try
             {
-                string fileName = "tour_" + Guid.NewGuid() + Path.GetExtension(file.FileName);
-                string uploadPath = Server.MapPath("~/Content/Images/");
-
-                if (!Directory.Exists(uploadPath))
+                // --- BƯỚC 1: XỬ LÝ UPLOAD ẢNH ---
+                var file = Request.Files["ImageFile"];
+                if (file != null && file.ContentLength > 0)
                 {
-                    Directory.CreateDirectory(uploadPath);
+                    // Tạo tên file ngẫu nhiên để tránh trùng
+                    string fileName = "tour_" + Guid.NewGuid() + Path.GetExtension(file.FileName);
+
+                    // Đường dẫn lưu file trên server Admin
+                    string uploadPath = Server.MapPath("~/Content/Images/");
+
+                    // Tạo thư mục nếu chưa có
+                    if (!Directory.Exists(uploadPath))
+                    {
+                        Directory.CreateDirectory(uploadPath);
+                    }
+
+                    // Lưu file vật lý
+                    file.SaveAs(Path.Combine(uploadPath, fileName));
+
+                    // Cập nhật đường dẫn ảnh vào Model để lưu xuống DB
+                    tour.HinhAnhDaiDien = "/Content/Images/" + fileName;
+                }
+                // Nếu không chọn ảnh mới, tour.HinhAnhDaiDien vẫn giữ giá trị cũ (do input hidden trong View)
+                // ---------------------------------
+
+                // --- BƯỚC 2: GỌI API LƯU DỮ LIỆU ---
+                bool result = false;
+                if (tour.MaTour > 0)
+                {
+                    // Có ID -> Gọi API Sửa (PUT)
+                    result = PutToApi("api/admintour", tour);
+                }
+                else
+                {
+                    // Không ID -> Gọi API Thêm (POST)
+                    result = PostToApi("api/admintour", tour);
                 }
 
-                file.SaveAs(Path.Combine(uploadPath, fileName));
-                tour.HinhAnhDaiDien = "/Content/Images/" + fileName;
+                if (result)
+                    return Json(new { success = true, message = "Lưu dữ liệu thành công!" });
+                else
+                    return Json(new { success = false, message = "Lỗi khi gọi API (Kiểm tra server API)." });
             }
-            // --------------------------
-
-            bool result = false;
-            if (tour.MaTour > 0)
+            catch (Exception ex)
             {
-                // Gọi API Sửa
-                result = PutToApi("api/admintour", tour);
+                return Json(new { success = false, message = "Lỗi server: " + ex.Message });
             }
-            else
-            {
-                // Gọi API Thêm
-                result = PostToApi("api/admintour", tour);
-            }
-
-            if (result)
-                return Json(new { success = true, message = "Lưu thành công!" });
-            else
-                return Json(new { success = false, message = "Lỗi khi gọi API." });
         }
 
-        // 4. Xóa Tour - SỬA LẠI ĐƯỜNG DẪN API CHO CHUẨN
+        // 4. XÓA TOUR
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            // API mới đổi thành: api/admintour/delete/{id}
+            // Gọi API Xóa: api/admintour/delete/{id}
             bool result = DeleteFromApi("api/admintour/delete/" + id);
 
             if (result) return Json(new { success = true });
 
-            // Trả về false kèm thông báo nếu xóa thất bại (do ràng buộc)
-            return Json(new { success = false, message = "Không thể xóa tour này (Đã có đơn đặt hoặc lỗi ràng buộc)." });
+            return Json(new { success = false, message = "Không thể xóa tour này (Đang có đơn đặt hàng hoặc lỗi ràng buộc)." });
         }
     }
 }

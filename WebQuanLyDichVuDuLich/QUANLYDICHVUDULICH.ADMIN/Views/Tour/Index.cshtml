@@ -6,13 +6,31 @@
 }
 
 <style>
-    /* Card bao quanh nội dung */
-    .content-card {
-        background: white;
+    /* CSS cho Form trượt (Thêm/Sửa) */
+    .form-section {
+        display: none;
+        background: #fff;
+        padding: 30px;
         border-radius: 8px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-        padding: 20px;
-        min-height: 80vh;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+        border-top: 4px solid #0d6efd;
+    }
+
+    .form-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 15px;
+    }
+
+    .form-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: #0d6efd;
+        margin: 0;
     }
 
     /* Ảnh nhỏ trong bảng */
@@ -24,94 +42,213 @@
         border: 1px solid #dee2e6;
     }
 
-    /* Style cho bảng */
-    .table thead th {
-        background-color: #f8f9fa;
-        border-bottom: 2px solid #dee2e6;
-        color: #495057;
-        font-weight: 600;
+    /* Ảnh xem trước khi upload */
+    .preview-container {
+        width: 100%;
+        height: 220px;
+        border: 2px dashed #ccc;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: #f9f9f9;
+        margin-top: 10px;
+    }
+
+    .preview-img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: cover;
     }
 </style>
 
-<div class="text-end mb-3">
-    <button class="btn btn-primary" onclick="openModal(0)">
-        <i class="bi bi-plus-lg"></i> Thêm Tour Mới
-    </button>
+<div id="section-form" class="form-section">
+    <div class="form-header">
+        <h4 class="form-title" id="formTitle"><i class="bi bi-pencil-square"></i> Thông tin Tour</h4>
+        <button class="btn btn-secondary" onclick="closeForm()"><i class="bi bi-x-lg"></i> Đóng</button>
+    </div>
+
+    <form id="frmTour" enctype="multipart/form-data">
+        <input type="hidden" name="MaTour" id="MaTour" value="0" />
+        <input type="hidden" name="HinhAnhDaiDien" id="HinhAnhDaiDien" />
+
+        <div class="row">
+            <div class="col-lg-4 border-end">
+                <h6 class="text-uppercase text-muted fw-bold mb-3">Thông tin chung</h6>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Tên Tour <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="TenTour" id="TenTour" required placeholder="Nhập tên tour...">
+                </div>
+                <div class="row">
+                    <div class="col-6 mb-3"><label class="form-label">Mã Danh Mục</label><input type="number" class="form-control" name="MaDanhMuc" id="MaDanhMuc" required></div>
+                    <div class="col-6 mb-3"><label class="form-label">Phương tiện</label><input type="text" class="form-control" name="PhuongTien" id="PhuongTien"></div>
+                </div>
+                <div class="row">
+                    <div class="col-6 mb-3"><label class="form-label">Điểm Đi</label><input type="text" class="form-control" name="DiemKhoiHanh" id="DiemKhoiHanh"></div>
+                    <div class="col-6 mb-3"><label class="form-label">Điểm Đến</label><input type="text" class="form-control" name="DiemDen" id="DiemDen"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Trạng thái</label>
+                    <select class="form-select" name="TrangThai" id="TrangThai">
+                        <option value="Đang mở bán">Đang mở bán</option>
+                        <option value="Hết chỗ">Hết chỗ</option>
+                        <option value="Tạm ngưng">Tạm ngưng</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-4 border-end">
+                <h6 class="text-uppercase text-muted fw-bold mb-3">Chi phí & Thời gian</h6>
+                <div class="row">
+                    <div class="col-6 mb-3"><label class="form-label fw-bold">Giá Gốc</label><input type="number" class="form-control" name="GiaGoc" id="GiaGoc" required></div>
+                    <div class="col-6 mb-3"><label class="form-label">Khuyến Mãi</label><input type="number" class="form-control" name="GiaKhuyenMai" id="GiaKhuyenMai"></div>
+                </div>
+                <div class="row">
+                    <div class="col-6 mb-3"><label class="form-label">Ngày Đi</label><input type="date" class="form-control" name="NgayBatDau" id="NgayBatDau"></div>
+                    <div class="col-6 mb-3"><label class="form-label">Ngày Về</label><input type="date" class="form-control" name="NgayKetThuc" id="NgayKetThuc"></div>
+                </div>
+                <div class="row">
+                    <div class="col-4 mb-3"><label class="form-label">Số ngày</label><input type="number" class="form-control" name="ThoiLuongNgay" id="ThoiLuongNgay"></div>
+                    <div class="col-4 mb-3"><label class="form-label">Số chỗ</label><input type="number" class="form-control" name="SoNguoiToiDa" id="SoNguoiToiDa"></div>
+                    <div class="col-4 mb-3"><label class="form-label">Còn lại</label><input type="number" class="form-control" name="SoChoConLai" id="SoChoConLai"></div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <h6 class="text-uppercase text-muted fw-bold mb-3">Hình ảnh & Nội dung</h6>
+                <div class="mb-3">
+                    <label class="form-label">Ảnh đại diện</label>
+                    <input type="file" class="form-control" name="ImageFile" id="ImageFile" accept="image/*" onchange="previewFile()">
+                    <div class="preview-container">
+                        <img id="previewImage" src="https://via.placeholder.com/300x200?text=Chua+co+anh" class="preview-img">
+                    </div>
+                </div>
+                <div class="mb-3"><label class="form-label">Mô tả ngắn</label><textarea class="form-control" name="MoTa" id="MoTa" rows="2"></textarea></div>
+            </div>
+
+            <div class="col-12 mt-3">
+                <label class="form-label fw-bold">Lịch trình chi tiết</label>
+                <textarea class="form-control" name="LichTrinh" id="LichTrinh" rows="4"></textarea>
+            </div>
+        </div>
+
+        <div class="text-end mt-4 pt-3 border-top">
+            <button type="button" class="btn btn-secondary me-2" onclick="closeForm()">Hủy bỏ</button>
+            <button type="button" class="btn btn-primary px-4" onclick="saveTour()"><i class="bi bi-save"></i> LƯU LẠI</button>
+        </div>
+    </form>
 </div>
 
-<div class="content-card">
-    <div class="table-responsive">
-        <table class="table table-hover align-middle">
-            <thead>
-                <tr>
-                    <th style="width: 80px;">Hình</th>
-                    <th>Tên Tour</th>
-                    <th>Giá</th>
-                    <th>Thời lượng</th>
-                    <th>Trạng thái</th>
-                    <th class="text-center">Tác vụ</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model != null && Model.Any())
-                {
-                    foreach (var item in Model)
-                    {
+<div id="section-list">
+    <div class="text-end mb-3">
+        <button class="btn btn-primary" onclick="showFormAdd()"><i class="bi bi-plus-lg"></i> Thêm Tour Mới</button>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
                         <tr>
-                            <td>
-                                <img src="@(string.IsNullOrEmpty(item.HinhAnhDaiDien) ? "https://placehold.co/60x60?text=No+Img" : item.HinhAnhDaiDien)"
-                                     class="tour-thumb"
-                                     onerror="this.src='https://placehold.co/60x60?text=Error'">
-                            </td>
-                            <td class="fw-bold">@item.TenTour</td>
-                            <td class="text-primary fw-bold">@string.Format("{0:N0} đ", item.GiaGoc)</td>
-                            <td>@item.ThoiLuongNgay ngày</td>
-                            <td>
-                                <span class="badge @(item.TrangThai == "Đang mở bán" ? "bg-success" : "bg-secondary")">
-                                    @item.TrangThai
-                                </span>
-                            </td>
-                            <td class="text-center">
-                                <button class="btn btn-sm btn-outline-primary me-1" onclick="openModal(@item.MaTour)" title="Sửa">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
-                                <button class="btn btn-sm btn-outline-danger" onclick="deleteTour(@item.MaTour)" title="Xóa">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </td>
+                            <th style="width: 80px;">Hình</th>
+                            <th>Tên Tour</th>
+                            <th>Giá Gốc</th>
+                            <th>Khởi hành</th>
+                            <th>Trạng thái</th>
+                            <th class="text-center" style="width: 150px;">Tác vụ</th>
                         </tr>
-                    }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="6" class="text-center text-muted py-4">
-                            <i class="bi bi-inbox fs-1"></i>
-                            <p class="mb-0">Không tìm thấy tour nào.</p>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <img src="@(string.IsNullOrEmpty(item.HinhAnhDaiDien) ? "https://placehold.co/60x60?text=No+Img" : item.HinhAnhDaiDien)"
+                                             class="tour-thumb" onerror="this.src='https://placehold.co/60x60?text=Error'">
+                                    </td>
+                                    <td class="fw-bold">
+                                        @item.TenTour <br />
+                                        <small class="text-muted" style="font-size:12px;">@item.ThoiLuongNgay ngày | @item.PhuongTien</small>
+                                    </td>
+                                    <td class="text-primary fw-bold">@string.Format("{0:N0} đ", item.GiaGoc)</td>
+                                    <td>@(item.NgayBatDau.HasValue ? item.NgayBatDau.Value.ToString("dd/MM/yyyy") : "---")</td>
+                                    <td>
+                                        <span class="badge @(item.TrangThai == "Đang mở bán" ? "bg-success" : "bg-secondary")">@item.TrangThai</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <button class="btn btn-sm btn-outline-info" onclick="viewDetails(@item.MaTour)" title="Xem chi tiết">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="showFormEdit(@item.MaTour)" title="Sửa">
+                                            <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" onclick="deleteTour(@item.MaTour)" title="Xóa">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr><td colspan="6" class="text-center text-muted py-4">Không có dữ liệu tour.</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="modal fade" id="tourModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+<div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="modalTitle">Thông tin Tour</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title fw-bold"><i class="bi bi-info-circle"></i> Chi tiết Tour</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body" id="modalBody">
-                <div class="text-center p-3">
-                    <div class="spinner-border text-primary" role="status"></div>
-                    <p class="mt-2">Đang tải dữ liệu...</p>
+            <div class="modal-body p-4">
+                <div class="row">
+                    <div class="col-md-5 text-center">
+                        <img id="viewImage" src="" class="img-fluid rounded border mb-3" style="width:100%; height:350px; object-fit:cover;">
+                        <h4 class="text-danger fw-bold" id="viewGia"></h4>
+                        <p class="fs-5">Giá KM: <span id="viewGiaKM" class="fw-bold text-success"></span></p>
+                    </div>
+                    <div class="col-md-7">
+                        <h3 id="viewTenTour" class="text-primary fw-bold mb-3"></h3>
+                        <div class="mb-3">
+                            <span id="viewStatus" class="badge bg-success fs-6"></span>
+                            <span class="badge bg-light text-dark border ms-2">Mã: <span id="viewMaTour"></span></span>
+                        </div>
+
+                        <div class="card bg-light border-0 mb-3">
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <div class="col-6"><strong><i class="bi bi-tag"></i> Danh mục:</strong> <span id="viewMaDanhMuc"></span></div>
+                                    <div class="col-6"><strong><i class="bi bi-clock"></i> Thời lượng:</strong> <span id="viewThoiLuong"></span></div>
+                                    <div class="col-6"><strong><i class="bi bi-bus-front"></i> Phương tiện:</strong> <span id="viewPhuongTien"></span></div>
+                                    <div class="col-6"><strong><i class="bi bi-people"></i> Số chỗ:</strong> <span id="viewSoCho"></span> (Còn lại: <span id="viewConLai" class="fw-bold text-success"></span>)</div>
+                                    <div class="col-6"><strong><i class="bi bi-calendar-check"></i> Ngày đi:</strong> <span id="viewNgayDi" class="fw-bold text-primary"></span></div>
+                                    <div class="col-6"><strong><i class="bi bi-calendar-x"></i> Ngày về:</strong> <span id="viewNgayVe" class="fw-bold text-danger"></span></div>
+                                    <div class="col-12"><strong><i class="bi bi-geo-alt"></i> Lộ trình:</strong> <span id="viewDiemDi"></span> <i class="bi bi-arrow-right"></i> <span id="viewDiemDen"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <p><strong>Mô tả ngắn:</strong> <span id="viewMoTa" class="text-muted fst-italic"></span></p>
+                    </div>
+                    <div class="col-12 mt-4">
+                        <h5 class="fw-bold border-bottom pb-2">Lịch trình chi tiết</h5>
+                        <div class="p-3 bg-light rounded border" style="max-height: 300px; overflow-y: auto;">
+                            <p id="viewLichTrinh" style="white-space: pre-line; margin-bottom: 0;"></p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary" onclick="saveTour()">Lưu lại</button>
+                <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Đóng</button>
             </div>
         </div>
     </div>
@@ -122,101 +259,149 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        // 1. Mở Modal (Gọi Partial View từ Controller)
-        function openModal(id) {
-            $('#modalTitle').text(id === 0 ? "Thêm Tour Mới" : "Cập nhật Tour");
-            var myModal = new bootstrap.Modal(document.getElementById('tourModal'));
-            myModal.show();
-
-            // Gọi AJAX lấy form
-            $.get('@Url.Action("GetModal", "Tour")', { id: id })
-                .done(function (data) {
-                    $('#modalBody').html(data);
-                })
-                .fail(function() {
-                    $('#modalBody').html('<div class="alert alert-danger text-center">Không thể tải biểu mẫu. Vui lòng thử lại!</div>');
-                });
+        // --- 1. CHUYỂN ĐỔI GIAO DIỆN FORM ---
+        function showFormAdd() {
+            document.getElementById('frmTour').reset();
+            $('#MaTour').val(0);
+            $('#HinhAnhDaiDien').val('');
+            $('#previewImage').attr('src', 'https://via.placeholder.com/300x200?text=Upload+Anh');
+            $('#formTitle').html('<i class="bi bi-plus-circle"></i> Thêm Tour Mới');
+            $('#section-list').slideUp(300);
+            $('#section-form').slideDown(300);
         }
 
-        // 2. Lưu Dữ Liệu (Dùng FormData để gửi được cả Ảnh + Text)
-        function saveTour() {
-            var form = document.getElementById('frmTour');
+        function closeForm() {
+            $('#section-form').slideUp(300);
+            $('#section-list').slideDown(300);
+        }
 
-            // Kiểm tra form có tồn tại không
-            if (!form) {
-                Swal.fire('Lỗi', 'Không tìm thấy biểu mẫu!', 'error');
-                return;
-            }
+        // --- 2. ĐIỀN DỮ LIỆU VÀO FORM SỬA ---
+        function showFormEdit(id) {
+            Swal.fire({ title: 'Đang tải...', didOpen: () => Swal.showLoading() });
+            $.get('/Tour/GetJsonTour?id=' + id, function (data) {
+                Swal.close();
+                if (data) {
+                    $('#MaTour').val(data.MaTour);
+                    $('#TenTour').val(data.TenTour);
+                    $('#MaDanhMuc').val(data.MaDanhMuc);
+                    $('#GiaGoc').val(data.GiaGoc);
+                    $('#GiaKhuyenMai').val(data.GiaKhuyenMai);
+                    $('#ThoiLuongNgay').val(data.ThoiLuongNgay);
+                    $('#SoNguoiToiDa').val(data.SoNguoiToiDa);
+                    $('#SoChoConLai').val(data.SoChoConLai);
+                    $('#DiemKhoiHanh').val(data.DiemKhoiHanh);
+                    $('#DiemDen').val(data.DiemDen);
+                    $('#PhuongTien').val(data.PhuongTien);
+                    $('#TrangThai').val(data.TrangThai);
+                    $('#MoTa').val(data.MoTa);
+                    $('#LichTrinh').val(data.LichTrinh);
+                    $('#HinhAnhDaiDien').val(data.HinhAnhDaiDien);
 
-            // Kiểm tra validate cơ bản (HTML5 required)
-            if (!form.checkValidity()) {
-                form.reportValidity();
-                return;
-            }
+                    if (data.NgayBatDau) $('#NgayBatDau').val(data.NgayBatDau.substring(0, 10));
+                    if (data.NgayKetThuc) $('#NgayKetThuc').val(data.NgayKetThuc.substring(0, 10));
 
-            var formData = new FormData(form);
+                    if (data.HinhAnhDaiDien) $('#previewImage').attr('src', data.HinhAnhDaiDien);
+                    else $('#previewImage').attr('src', 'https://via.placeholder.com/300x200?text=Chua+co+anh');
 
-            // Hiển thị loading
-            Swal.fire({ title: 'Đang xử lý...', didOpen: () => Swal.showLoading() });
-
-            $.ajax({
-                url: '@Url.Action("Save", "Tour")',
-                type: 'POST',
-                data: formData,
-                processData: false, // Bắt buộc false khi gửi file
-                contentType: false, // Bắt buộc false khi gửi file
-                success: function (res) {
-                    if (res.success) {
-                        $('#tourModal').modal('hide');
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Thành công',
-                            text: res.message,
-                            timer: 1500,
-                            showConfirmButton: false
-                        }).then(() => {
-                            location.reload(); // Tải lại trang
-                        });
-                    } else {
-                        Swal.fire('Thất bại', res.message, 'error');
-                    }
-                },
-                error: function () {
-                    Swal.fire('Lỗi', 'Không thể kết nối đến máy chủ.', 'error');
+                    $('#formTitle').html('<i class="bi bi-pencil-square"></i> Cập nhật Tour #' + data.MaTour);
+                    $('#section-list').slideUp(300);
+                    $('#section-form').slideDown(300);
                 }
+            }).fail(function() {
+                Swal.fire('Lỗi', 'Không thể tải dữ liệu tour.', 'error');
             });
         }
 
-        // 3. Xóa Tour (Có cảnh báo)
+        // --- 3. XEM CHI TIẾT (ĐÃ FIX LỖI NGÀY & ẢNH) ---
+        function viewDetails(id) {
+            Swal.fire({ title: 'Đang tải...', didOpen: () => Swal.showLoading() });
+            $.get('/Tour/GetJsonTour?id=' + id, function (data) {
+                Swal.close();
+                if (data) {
+                    $('#viewMaTour').text('#' + data.MaTour);
+                    $('#viewTenTour').text(data.TenTour);
+                    $('#viewMaDanhMuc').text(data.MaDanhMuc);
+                    $('#viewGia').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data.GiaGoc));
+
+                    var giaKM = data.GiaKhuyenMai ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data.GiaKhuyenMai) : 'Không có';
+                    $('#viewGiaKM').text(giaKM);
+
+                    $('#viewThoiLuong').text(data.ThoiLuongNgay + ' ngày');
+                    $('#viewPhuongTien').text(data.PhuongTien || 'Chưa cập nhật');
+                    $('#viewSoCho').text(data.SoNguoiToiDa || 0);
+                    $('#viewConLai').text(data.SoChoConLai || 0);
+                    $('#viewStatus').text(data.TrangThai);
+                    $('#viewMoTa').text(data.MoTa || 'Đang cập nhật...');
+                    $('#viewLichTrinh').text(data.LichTrinh || 'Đang cập nhật...');
+                    $('#viewDiemDi').text(data.DiemKhoiHanh || '...');
+                    $('#viewDiemDen').text(data.DiemDen || '...');
+
+                    // --- FIX NGÀY THÁNG ---
+                    const formatDate = (dateString) => {
+                        if (!dateString) return '...';
+                        if (dateString.includes('/Date(')) {
+                            return new Date(parseInt(dateString.substr(6))).toLocaleDateString('vi-VN');
+                        }
+                        var date = new Date(dateString);
+                        if (isNaN(date.getTime())) return '...';
+                        return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+                    };
+
+                    $('#viewNgayDi').text(formatDate(data.NgayBatDau));
+                    $('#viewNgayVe').text(formatDate(data.NgayKetThuc));
+                    // ---------------------
+
+                    // --- FIX ẢNH ---
+                    var imgSrc = data.HinhAnhDaiDien ? data.HinhAnhDaiDien : 'https://placehold.co/600x400?text=No+Image';
+                    $('#viewImage').attr('src', imgSrc);
+                    $('#viewImage').off('error').on('error', function() { $(this).attr('src', 'https://placehold.co/600x400?text=Error'); });
+
+                    var myModal = new bootstrap.Modal(document.getElementById('detailModal'));
+                    myModal.show();
+                }
+            }).fail(function() {
+                Swal.fire('Lỗi', 'Không thể kết nối máy chủ.', 'error');
+            });
+        }
+
+        // --- 4. CÁC HÀM XỬ LÝ KHÁC ---
+        function saveTour() {
+            var form = document.getElementById('frmTour');
+            if (!form.checkValidity()) { form.reportValidity(); return; }
+            var formData = new FormData(form);
+            Swal.fire({ title: 'Đang lưu...', didOpen: () => Swal.showLoading() });
+
+            $.ajax({
+                url: '@Url.Action("Save", "Tour")',
+                type: 'POST', data: formData, processData: false, contentType: false,
+                success: function (res) {
+                    if (res.success) Swal.fire('Thành công', res.message, 'success').then(() => location.reload());
+                    else Swal.fire('Thất bại', res.message, 'error');
+                },
+                error: function () { Swal.fire('Lỗi', 'Không kết nối được server.', 'error'); }
+            });
+        }
+
+        function previewFile() {
+            var preview = document.getElementById('previewImage');
+            var file = document.getElementById('ImageFile').files[0];
+            var reader = new FileReader();
+            reader.onloadend = function () { preview.src = reader.result; }
+            if (file) reader.readAsDataURL(file);
+        }
+
         function deleteTour(id) {
             Swal.fire({
-                title: 'Bạn có chắc chắn?',
-                text: "Dữ liệu sẽ bị xóa vĩnh viễn!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Xóa ngay',
-                cancelButtonText: 'Hủy'
+                title: 'Xóa tour này?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', confirmButtonText: 'Xóa', cancelButtonText: 'Hủy'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Hiển thị loading
                     Swal.fire({ title: 'Đang xóa...', didOpen: () => Swal.showLoading() });
-
                     $.post('@Url.Action("Delete", "Tour")', { id: id })
                         .done(function (res) {
-                            if (res.success) {
-                                Swal.fire('Đã xóa!', 'Xóa thành công.', 'success')
-                                    .then(() => location.reload());
-                            } else {
-                                // Hiển thị lỗi chi tiết từ Server gửi về (VD: Ràng buộc khóa ngoại)
-                                Swal.fire('Không thể xóa', res.message, 'error');
-                            }
+                            if (res.success) Swal.fire('Đã xóa!', '', 'success').then(() => location.reload());
+                            else Swal.fire('Lỗi', res.message, 'error');
                         })
-                        .fail(function (xhr) {
-                            console.error(xhr);
-                            Swal.fire('Lỗi Server', 'Kiểm tra lại kết nối API.', 'error');
-                        });
+                        .fail(function() { Swal.fire('Lỗi', 'Lỗi kết nối server', 'error'); });
                 }
             })
         }

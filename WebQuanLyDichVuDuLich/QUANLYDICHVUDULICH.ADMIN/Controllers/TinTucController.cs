@@ -8,23 +8,22 @@ namespace QUANLYDICHVUDULICH.ADMIN.Controllers
 {
     public class TinTucController : BaseController
     {
-        // 1. Hiển thị danh sách (ĐÃ SỬA: Thêm tìm kiếm)
+        // 1. Hiển thị danh sách & Tìm kiếm
         public ActionResult Index(string searchString, string category)
         {
             try
             {
-                // SỬA ĐƯỜNG DẪN CHUẨN: api/admintintuc
                 var list = GetFromApi<List<TinTucViewModel>>("api/admintintuc");
                 if (list == null) list = new List<TinTucViewModel>();
 
-                // XỬ LÝ TÌM KIẾM (Mới thêm)
+                // Tìm kiếm
                 if (!String.IsNullOrEmpty(searchString))
                 {
                     searchString = searchString.ToLower().Trim();
                     list = list.FindAll(s => s.TieuDe.ToLower().Contains(searchString));
                 }
 
-                // XỬ LÝ LỌC DANH MỤC
+                // Lọc danh mục
                 if (!String.IsNullOrEmpty(category))
                 {
                     list = list.FindAll(s => s.DanhMuc == category);
@@ -38,13 +37,28 @@ namespace QUANLYDICHVUDULICH.ADMIN.Controllers
             }
         }
 
-        // 2. Trang Thêm mới
+        // 2. Hàm lấy chi tiết Tin tức (JSON) -> DÙNG CHO MODAL XEM CHI TIẾT
+        [HttpGet]
+        public ActionResult GetJsonTinTuc(int id)
+        {
+            try
+            {
+                var tin = GetFromApi<TinTucViewModel>("api/admintintuc/" + id);
+                return Json(tin, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        // 3. Trang Thêm mới
         public ActionResult Create()
         {
             return View();
         }
 
-        // 3. Xử lý Thêm mới
+        // 4. Xử lý Thêm mới
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult Create(TinTucViewModel model)
@@ -52,7 +66,6 @@ namespace QUANLYDICHVUDULICH.ADMIN.Controllers
             model.NgayDang = DateTime.Now;
             model.TacGia = Session["User"] != null ? Session["User"].ToString() : "Admin";
 
-            // SỬA ĐƯỜNG DẪN CHUẨN
             if (PostToApi("api/admintintuc", model))
             {
                 return RedirectToAction("Index");
@@ -61,20 +74,18 @@ namespace QUANLYDICHVUDULICH.ADMIN.Controllers
             return View(model);
         }
 
-        // 4. Trang Sửa
+        // 5. Trang Sửa
         public ActionResult Edit(int id)
         {
-            // SỬA ĐƯỜNG DẪN CHUẨN
             var model = GetFromApi<TinTucViewModel>("api/admintintuc/" + id);
             return View(model);
         }
 
-        // 5. Xử lý Cập nhật
+        // 6. Xử lý Cập nhật
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult Edit(TinTucViewModel model)
         {
-            // SỬA ĐƯỜNG DẪN CHUẨN
             if (PutToApi("api/admintintuc", model))
             {
                 return RedirectToAction("Index");
@@ -83,11 +94,10 @@ namespace QUANLYDICHVUDULICH.ADMIN.Controllers
             return View(model);
         }
 
-        // 6. Xử lý Xóa (Giữ nguyên logic JSON cho AJAX)
+        // 7. Xử lý Xóa (AJAX)
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            // SỬA ĐƯỜNG DẪN CHUẨN: api/admintintuc/delete/{id}
             bool result = DeleteFromApi("api/admintintuc/delete/" + id);
 
             if (result)
@@ -96,7 +106,7 @@ namespace QUANLYDICHVUDULICH.ADMIN.Controllers
             }
             else
             {
-                return Json(new { success = false, message = "Lỗi khi gọi API xóa (Kiểm tra lại kết nối hoặc dữ liệu ràng buộc)" });
+                return Json(new { success = false, message = "Lỗi khi gọi API xóa" });
             }
         }
     }

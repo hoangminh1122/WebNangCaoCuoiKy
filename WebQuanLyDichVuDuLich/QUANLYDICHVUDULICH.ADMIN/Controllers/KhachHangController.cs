@@ -69,5 +69,19 @@ namespace QUANLYDICHVUDULICH.ADMIN.Controllers
             // Nếu API trả về BadRequest (do ràng buộc đơn hàng), hàm DeleteFromApi trả về false
             return Json(new { success = false, message = "Không thể xóa (Khách hàng này có thể đã đặt tour)." });
         }
+
+        [HttpGet]
+        public ActionResult GetJsonKhachHang(int id)
+        {
+            try
+            {
+                var kh = GetFromApi<KhachHangViewModel>("api/adminkhachhang/" + id);
+                return Json(kh, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

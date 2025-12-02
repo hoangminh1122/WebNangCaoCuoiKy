@@ -67,5 +67,33 @@ namespace QUANLYDICHVUDULICH.API.Controllers
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
         }
+        [HttpGet]
+        [Route("{id}")]
+        public IHttpActionResult GetKhachHangById(int id)
+        {
+            try
+            {
+                string sql = "SELECT * FROM NguoiDung WHERE MaND = @id";
+                SqlParameter[] param = { new SqlParameter("@id", id) };
+                DataTable dt = ExecuteQuery(sql, param);
+
+                if (dt.Rows.Count > 0)
+                {
+                    DataRow row = dt.Rows[0];
+                    var kh = new KhachHangDTO
+                    {
+                        MaND = Convert.ToInt32(row["MaND"]),
+                        HoTen = row["HoTen"].ToString(),
+                        Email = row["Email"].ToString(),
+                        SoDienThoai = row["SoDienThoai"] != DBNull.Value ? row["SoDienThoai"].ToString() : "Chưa cập nhật",
+                        NgayTao = Convert.ToDateTime(row["NgayTao"]),
+                        TrangThai = Convert.ToBoolean(row["TrangThai"])
+                    };
+                    return Ok(kh);
+                }
+                return NotFound();
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
+        }
     }
 }

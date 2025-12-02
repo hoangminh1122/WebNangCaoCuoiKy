@@ -144,6 +144,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\DatTourController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KhachHangController.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ChatViewModel.cs" />
     <Compile Include="Models\DashboardViewModel.cs" />
     <Compile Include="Models\DatTourViewModel.cs" />
     <Compile Include="Models\KhachHangViewModel.cs" />
@@ -218,6 +220,7 @@
     <Content Include="Views\TinTuc\Create.cshtml" />
     <Content Include="Views\TinTuc\Edit.cshtml" />
     <Content Include="Views\TinTuc\Index.cshtml" />
+    <Content Include="Views\Chat\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
