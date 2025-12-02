@@ -9,7 +9,7 @@ namespace QUANLYDICHVUDULICH.API.Controllers
 {
     // ĐỔI ROUTE PREFIX CHO ĐỒNG BỘ (Khuyên dùng: api/admintintuc)
     // Nếu bạn muốn giữ api/tintuc thì sửa ở đây và cả bên Frontend
-    [RoutePrefix("api/tintuc")]
+    [RoutePrefix("api/admintintuc")]
     public class AdminTinTucController : BaseApiController
     {
         // 1. LẤY DANH SÁCH (GET api/admintintuc)

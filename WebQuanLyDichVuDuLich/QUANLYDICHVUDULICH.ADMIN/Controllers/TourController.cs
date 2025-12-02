@@ -9,13 +9,29 @@ namespace QUANLYDICHVUDULICH.ADMIN.Controllers
 {
     public class TourController : BaseController
     {
-        // 1. Lấy danh sách Tour
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
             try
             {
+                // 1. Gọi API lấy toàn bộ danh sách
                 var tours = GetFromApi<List<TourViewModel>>("api/admintour");
+
+                // 2. Nếu API trả về null (lỗi hoặc rỗng), khởi tạo list mới để tránh lỗi NullReference
                 if (tours == null) tours = new List<TourViewModel>();
+
+                // 3. XỬ LÝ TÌM KIẾM (Chuẩn hóa chuỗi)
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    searchString = searchString.Trim().ToLower(); // Xóa khoảng trắng thừa, chuyển thường
+
+                    // Lọc theo Tên Tour HOẶC Mã Tour
+                    tours = tours.FindAll(t =>
+                        (t.TenTour != null && t.TenTour.ToLower().Contains(searchString)) ||
+                        t.MaTour.ToString().Contains(searchString)
+                    );
+                }
+
+                // 4. Trả về View (Đảm bảo Model là IEnumerable<TourViewModel>)
                 return View(tours);
             }
             catch
@@ -24,7 +40,7 @@ namespace QUANLYDICHVUDULICH.ADMIN.Controllers
             }
         }
 
-        // 2. Trả về Form (Modal)
+        // 2. Trả về Form (Modal) - GIỮ NGUYÊN
         public ActionResult GetModal(int? id)
         {
             TourViewModel model = new TourViewModel();
@@ -36,7 +52,7 @@ namespace QUANLYDICHVUDULICH.ADMIN.Controllers
             return PartialView("_FormTour", model);
         }
 
-        // 3. LƯU DỮ LIỆU (CÓ XỬ LÝ UPLOAD ẢNH)
+        // 3. LƯU DỮ LIỆU (CÓ XỬ LÝ UPLOAD ẢNH) - GIỮ NGUYÊN
         [HttpPost]
         public ActionResult Save(TourViewModel tour)
         {
@@ -44,22 +60,15 @@ namespace QUANLYDICHVUDULICH.ADMIN.Controllers
             var file = Request.Files["ImageFile"];
             if (file != null && file.ContentLength > 0)
             {
-                // 1. Đặt tên file (dùng Guid để không trùng)
                 string fileName = "tour_" + Guid.NewGuid() + Path.GetExtension(file.FileName);
-
-                // 2. Định nghĩa đường dẫn lưu (Thư mục /Content/Images/)
                 string uploadPath = Server.MapPath("~/Content/Images/");
 
-                // 3. Tạo thư mục nếu chưa có
                 if (!Directory.Exists(uploadPath))
                 {
                     Directory.CreateDirectory(uploadPath);
                 }
 
-                // 4. Lưu file vào server
                 file.SaveAs(Path.Combine(uploadPath, fileName));
-
-                // 5. Gán đường dẫn vào Model để gửi sang API
                 tour.HinhAnhDaiDien = "/Content/Images/" + fileName;
             }
             // --------------------------
@@ -82,13 +91,17 @@ namespace QUANLYDICHVUDULICH.ADMIN.Controllers
                 return Json(new { success = false, message = "Lỗi khi gọi API." });
         }
 
-        // 4. Xóa Tour
+        // 4. Xóa Tour - SỬA LẠI ĐƯỜNG DẪN API CHO CHUẨN
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            bool result = DeleteFromApi("api/admintour/" + id);
+            // API mới đổi thành: api/admintour/delete/{id}
+            bool result = DeleteFromApi("api/admintour/delete/" + id);
+
             if (result) return Json(new { success = true });
-            return Json(new { success = false });
+
+            // Trả về false kèm thông báo nếu xóa thất bại (do ràng buộc)
+            return Json(new { success = false, message = "Không thể xóa tour này (Đã có đơn đặt hoặc lỗi ràng buộc)." });
         }
     }
 }

@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 
 <style>
+    /* CSS giữ nguyên, chỉ xóa phần search-box không dùng đến */
     body {
         background-color: #f5f7fa;
         font-family: 'Segoe UI', sans-serif;
@@ -21,46 +22,7 @@
         min-height: 80vh;
     }
 
-    .page-title {
-        font-size: 24px;
-        font-weight: 700;
-        color: #1a1a1a;
-        margin-bottom: 25px;
-    }
-
-    .filter-wrapper {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #f8f9fa;
-        padding: 10px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-    }
-
-    .search-box {
-        position: relative;
-        flex-grow: 1;
-        margin-right: 20px;
-    }
-
-        .search-box input {
-            width: 100%;
-            padding: 10px 15px 10px 45px;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            outline: none;
-            font-size: 14px;
-        }
-
-        .search-box i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #a0aec0;
-        }
-
+    /* Filter Buttons */
     .btn-filter {
         border: 1px solid #e2e8f0;
         background: white;
@@ -70,6 +32,7 @@
         font-size: 14px;
         cursor: pointer;
         transition: 0.2s;
+        margin-right: 5px;
     }
 
         .btn-filter.active {
@@ -83,10 +46,12 @@
             background-color: #edf2f7;
         }
 
+    /* Table */
     .custom-table {
         width: 100%;
         border-collapse: separate;
         border-spacing: 0;
+        margin-top: 15px;
     }
 
         .custom-table th {
@@ -116,6 +81,7 @@
         font-size: 13px;
     }
 
+    /* Badges */
     .badge-status {
         padding: 5px 12px;
         border-radius: 20px;
@@ -134,14 +100,13 @@
         color: #822727;
     }
 
-    /* Sửa nhẹ nút hành động để bấm được bằng JS */
+    /* Actions */
     .action-icon {
         color: #718096;
         font-size: 16px;
         margin-left: 10px;
         cursor: pointer;
         transition: 0.2s;
-        text-decoration: none;
         border: none;
         background: none;
     }
@@ -158,6 +123,10 @@
         color: #38a169;
     }
 
+    .action-delete:hover {
+        color: #dc3545;
+    }
+
     .custom-checkbox {
         width: 18px;
         height: 18px;
@@ -169,13 +138,11 @@
 
     @using (Html.BeginForm("Index", "KhachHang", FormMethod.Get))
     {
-        <div class="filter-wrapper">
-            <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" name="searchString" placeholder="Tìm kiếm theo tên, email, SĐT..." value="@Request.QueryString["searchString"]" />
-            </div>
+        <div style="display: flex; justify-content: flex-end; align-items: center;">
 
-            <div style="display:flex; gap: 5px;">
+            <input type="hidden" name="searchString" value="@Request.QueryString["searchString"]" />
+
+            <div style="display:flex;">
                 @{ string s = Request.QueryString["statusFilter"]; }
                 <button type="submit" name="statusFilter" value="" class="btn-filter @(string.IsNullOrEmpty(s) ? "active" : "")">Tất cả</button>
                 <button type="submit" name="statusFilter" value="active" class="btn-filter @(s == "active" ? "active" : "")">Hoạt động</button>
@@ -203,24 +170,18 @@
                 {
                     <tr>
                         <td><input type="checkbox" class="custom-checkbox"></td>
-                        <td>
-                            <div class="user-name">@item.HoTen</div>
-                        </td>
+                        <td><div class="user-name">@item.HoTen</div></td>
                         <td class="user-email">@item.Email</td>
                         <td>@item.SoDienThoai</td>
                         <td>@item.NgayTao.ToString("dd/MM/yyyy")</td>
                         <td>
                             @if (item.TrangThai)
-                            {
-                                <span class="badge-status badge-active">Hoạt động</span>
-                            }
+                            {<span class="badge-status badge-active">Hoạt động</span> }
                             else
-                            {
-                                <span class="badge-status badge-locked">Bị khóa</span>
-                            }
+                            { <span class="badge-status badge-locked">Bị khóa</span>}
                         </td>
                         <td style="text-align: right;">
-                            <a href="#" class="action-icon" title="Xem chi tiết"><i class="far fa-eye"></i></a>
+                            <button class="action-icon" title="Xem chi tiết"><i class="far fa-eye"></i></button>
 
                             @if (item.TrangThai)
                             {
@@ -234,6 +195,10 @@
                                     <i class="fas fa-lock"></i>
                                 </button>
                             }
+
+                            <button type="button" class="action-icon action-delete" title="Xóa khách hàng" onclick="deleteCustomer(@item.MaND)">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
                         </td>
                     </tr>
                 }
@@ -242,7 +207,7 @@
             {
                 <tr>
                     <td colspan="7" style="text-align:center; padding: 40px; color: #a0aec0;">
-                        <i class="fas fa-users-slash" style="font-size: 40px; margin-bottom: 10px;"></i><br />
+                        <i class="fas fa-search" style="font-size: 40px; margin-bottom: 10px;"></i><br />
                         Không tìm thấy khách hàng nào.
                     </td>
                 </tr>
@@ -251,11 +216,7 @@
     </table>
 
     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 30px;">
-        <span style="color: #718096; font-size: 14px;">Hiển thị @Model.Count() kết quả</span>
-        <div>
-            <button class="btn-filter">Trang trước</button>
-            <button class="btn-filter">Trang sau</button>
-        </div>
+        <span style="color: #718096; font-size: 14px;">Hiển thị @(Model != null ? Model.Count() : 0) kết quả</span>
     </div>
 </div>
 
@@ -264,42 +225,50 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        // Hàm Xử lý Khóa / Mở khóa
+        // 1. Hàm Khóa / Mở Khóa
         function toggleStatus(id, willLock) {
-            // willLock = true nghĩa là đang muốn Khóa
-            // willLock = false nghĩa là đang muốn Mở Khóa
-
             var titleText = willLock ? 'Khóa tài khoản này?' : 'Mở khóa tài khoản?';
-            var bodyText = willLock ? 'Người dùng sẽ không thể đăng nhập hệ thống.' : 'Người dùng sẽ hoạt động trở lại.';
             var btnText = willLock ? 'Khóa ngay' : 'Mở khóa';
-            var btnColor = willLock ? '#e53e3e' : '#38a169'; // Đỏ hoặc Xanh
+            var btnColor = willLock ? '#e53e3e' : '#38a169';
             var iconType = willLock ? 'warning' : 'question';
 
             Swal.fire({
                 title: titleText,
-                text: bodyText,
+                text: willLock ? "Người dùng sẽ không thể đăng nhập." : "Người dùng sẽ hoạt động lại.",
                 icon: iconType,
                 showCancelButton: true,
                 confirmButtonColor: btnColor,
-                cancelButtonColor: '#718096',
                 confirmButtonText: btnText,
                 cancelButtonText: 'Hủy'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Hiển thị loading
-                    Swal.fire({ title: 'Đang xử lý...', showConfirmButton: false, didOpen: () => { Swal.showLoading() } });
-
-                    // Gọi AJAX về Controller
+                    Swal.fire({ title: 'Đang xử lý...', didOpen: () => { Swal.showLoading() } });
                     $.post('@Url.Action("ToggleStatus", "KhachHang")', { id: id })
                         .done(function (res) {
-                            if (res.success) {
-                                Swal.fire('Thành công!', res.message, 'success').then(() => location.reload());
-                            } else {
-                                Swal.fire('Lỗi', res.message, 'error');
-                            }
-                        })
-                        .fail(function () {
-                            Swal.fire('Lỗi Server', 'Không thể kết nối API.', 'error');
+                            if (res.success) Swal.fire('Thành công!', res.message, 'success').then(() => location.reload());
+                            else Swal.fire('Lỗi', res.message, 'error');
+                        });
+                }
+            });
+        }
+
+        // 2. Hàm Xóa
+        function deleteCustomer(id) {
+            Swal.fire({
+                title: 'Xóa khách hàng?',
+                text: "Dữ liệu sẽ mất vĩnh viễn! (Chỉ xóa nếu khách chưa từng đặt tour)",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Xóa ngay',
+                cancelButtonText: 'Hủy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({ title: 'Đang xóa...', didOpen: () => { Swal.showLoading() } });
+                    $.post('@Url.Action("Delete", "KhachHang")', { id: id })
+                        .done(function (res) {
+                            if (res.success) Swal.fire('Đã xóa!', res.message, 'success').then(() => location.reload());
+                            else Swal.fire('Không thể xóa', res.message, 'error');
                         });
                 }
             });

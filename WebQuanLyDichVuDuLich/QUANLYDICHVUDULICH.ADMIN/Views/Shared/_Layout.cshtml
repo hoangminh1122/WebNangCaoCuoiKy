@@ -248,20 +248,25 @@
     </div>
 
     <div class="main-content">
-        <div class="top-header">
+        <div class="top-header mb-4">
             <h3>@ViewBag.Title</h3>
 
             <div class="d-flex align-items-center gap-4">
-                <div class="search-box">
-                    <i class="bi bi-search text-muted"></i>
-                    <input type="text" placeholder="Tìm kiếm tour, khách hàng...">
-                </div>
+                @using (Html.BeginForm("Index", ViewContext.RouteData.Values["controller"].ToString(), FormMethod.Get, new { @class = "d-flex" }))
+                {
+                    <div class="search-box">
+                        <i class="bi bi-search text-muted"></i>
+                        <input type="text" name="searchString" placeholder="Tìm kiếm..." value="@Request.QueryString["searchString"]">
+                    </div>
+                    <button type="submit" style="display:none"></button>
+                }
+
                 <div class="user-profile">
                     <i class="bi bi-bell fs-5 text-muted"></i>
                     <img src="https://ui-avatars.com/api/?name=@(Session["User"] ?? "Admin")&background=random" class="avatar" alt="Admin">
                     <div style="line-height: 1.2;">
-                        <div style="font-weight: bold; font-size: 14px;">@(Session["User"] ?? "Admin Name")</div>
-                        <div style="font-size: 12px; color: #666;">@(Session["UserEmail"] ?? "admin@tourwebsite.com")</div>
+                        <div style="font-weight: bold; font-size: 14px;">@(Session["User"] ?? "Quản trị viên")</div>
+                        <div style="font-size: 12px; color: #666;">@(Session["UserEmail"] ?? "admin@webdulich.com")</div>
                     </div>
                 </div>
             </div>

@@ -5,29 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!-- FontAwesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-
 <style>
-    /* --- CSS GIỮ NGUYÊN NHƯ CŨ --- */
-    body {
-        background-color: #f5f7fa;
-    }
-
-    .page-header-block {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    .page-title {
-        font-size: 24px;
-        font-weight: 700;
-        color: #1a1a1a;
-        margin: 0;
-    }
-
     .content-card {
         background: white;
         border-radius: 8px;
@@ -35,43 +13,7 @@
         padding: 20px;
     }
 
-    .filter-bar {
-        display: flex;
-        gap: 15px;
-        margin-bottom: 20px;
-    }
-
-    .search-box {
-        flex-grow: 1;
-        position: relative;
-    }
-
-        .search-box input {
-            width: 100%;
-            padding: 10px 15px 10px 40px;
-            border: 1px solid #e9ecef;
-            border-radius: 6px;
-            background-color: #f8f9fa;
-            outline: none;
-        }
-
-        .search-box i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #adb5bd;
-        }
-
-    .filter-dropdown {
-        padding: 10px 15px;
-        border: 1px solid #e9ecef;
-        border-radius: 6px;
-        background-color: white;
-        color: #495057;
-        min-width: 160px;
-    }
-
+    /* Table Styles */
     .custom-table {
         width: 100%;
         border-collapse: separate;
@@ -96,7 +38,7 @@
             font-size: 14px;
         }
 
-    /* Badge Status */
+    /* Status Badges */
     .status-badge {
         padding: 6px 12px;
         border-radius: 20px;
@@ -109,31 +51,32 @@
         background-color: #fff3cd;
         color: #856404;
     }
-
+    /* Chờ: Vàng */
     .st-confirmed {
         background-color: #d1e7dd;
         color: #0f5132;
     }
-
+    /* Xác nhận: Xanh lá */
     .st-paid {
         background-color: #cff4fc;
         color: #055160;
     }
-
+    /* Thanh toán: Xanh dương */
     .st-cancel {
         background-color: #f8d7da;
         color: #842029;
     }
+    /* Hủy: Đỏ */
 
     /* Action Buttons */
     .btn-action {
-        padding: 6px 12px;
+        padding: 5px 10px;
         border-radius: 4px;
         font-size: 12px;
         font-weight: 600;
         text-decoration: none;
         color: white;
-        margin-right: 5px;
+        margin-right: 4px;
         transition: 0.2s;
         border: none;
         display: inline-block;
@@ -169,32 +112,23 @@
         }
 </style>
 
-<div class="page-header-block">
-    <div>
-        <p class="page-subtitle">Xem và quản lý tất cả các đơn đặt tour trong hệ thống.</p>
-    </div>
-</div>
-
 <div class="content-card">
-    <!-- Filter Bar -->
-    <div class="filter-bar">
-        @using (Html.BeginForm("Index", "DatTour", FormMethod.Get, new { style = "flex-grow:1; display:flex; gap:15px;" }))
+
+    <div class="d-flex justify-content-end mb-3">
+        @using (Html.BeginForm("Index", "DatTour", FormMethod.Get, new { id = "filterForm" }))
         {
-            <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" name="searchString" placeholder="Tìm kiếm theo mã đơn, tên khách..." value="@Request.QueryString["searchString"]">
-            </div>
-            <select class="filter-dropdown" name="status">
-                <option>Tất cả trạng thái</option>
-                <option value="Chờ xác nhận">Chờ xác nhận</option>
-                <option value="Đã xác nhận">Đã xác nhận</option>
-                <option value="Đã thanh toán">Đã thanh toán</option>
+            <input type="hidden" name="searchString" value="@Request.QueryString["searchString"]" />
+
+            <select name="status" class="form-select form-select-sm w-auto" onchange="document.getElementById('filterForm').submit()">
+                <option value="">Tất cả trạng thái</option>
+                <option value="Chờ xác nhận" @(Request.QueryString["status"] == "Chờ xác nhận" ? "selected" : "")>Chờ xác nhận</option>
+                <option value="Đã xác nhận" @(Request.QueryString["status"] == "Đã xác nhận" ? "selected" : "")>Đã xác nhận</option>
+                <option value="Đã thanh toán" @(Request.QueryString["status"] == "Đã thanh toán" ? "selected" : "")>Đã thanh toán</option>
+                <option value="Đã hủy" @(Request.QueryString["status"] == "Đã hủy" ? "selected" : "")>Đã hủy</option>
             </select>
-            <button type="submit" style="display:none"></button>
         }
     </div>
 
-    <!-- Table -->
     <table class="custom-table">
         <thead>
             <tr>
@@ -204,7 +138,7 @@
                 <th>Ngày đi</th>
                 <th>Tổng tiền</th>
                 <th>Trạng thái</th>
-                <th style="text-align: center; width: 220px;">Hành động</th>
+                <th style="text-align: center; width: 200px;">Hành động</th>
             </tr>
         </thead>
         <tbody>
@@ -231,17 +165,13 @@
                         <td style="text-align: center;">
                             @if (item.TrangThai == "Chờ xác nhận")
                             {
-                                <!-- Nút Duyệt: Gọi updateStatus -->
-                                <button type="button" class="btn-action btn-approve" title="Duyệt đơn" onclick="updateStatus(@item.MaDatTour, 'Approve')">Duyệt</button>
-                                <!-- Nút Hủy: Gọi updateStatus -->
-                                <button type="button" class="btn-action btn-cancel" title="Hủy đơn" onclick="updateStatus(@item.MaDatTour, 'Cancel')">Hủy</button>
+                                <button type="button" class="btn-action btn-approve" onclick="updateStatus(@item.MaDatTour, 'Approve')">Duyệt</button>
+                                <button type="button" class="btn-action btn-cancel" onclick="updateStatus(@item.MaDatTour, 'Cancel')">Hủy</button>
                             }
                             else if (item.TrangThai == "Đã xác nhận")
                             {
                                 <button type="button" class="btn-action btn-cancel" onclick="updateStatus(@item.MaDatTour, 'Cancel')">Hủy</button>
                             }
-
-                            <!-- Nút Xóa: Gọi deleteOrder -->
                             <button type="button" class="btn-action btn-delete" onclick="deleteOrder(@item.MaDatTour)">Xóa</button>
                         </td>
                     </tr>
@@ -249,29 +179,27 @@
             }
             else
             {
-                <tr><td colspan="7" style="text-align:center; padding:30px; color:#999;">Chưa có đơn đặt tour nào.</td></tr>
+                <tr><td colspan="7" style="text-align:center; padding:30px; color:#999;">Không tìm thấy dữ liệu.</td></tr>
             }
         </tbody>
     </table>
 </div>
 
 @section scripts {
-    <!-- Thư viện jQuery & SweetAlert2 -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        // 1. Hàm Xóa Đơn Hàng (Delete)
+        // 1. HÀM XÓA
         function deleteOrder(id) {
             Swal.fire({
-                title: 'Xóa đơn hàng này?',
+                title: 'Xóa đơn này?',
                 text: "Dữ liệu sẽ mất vĩnh viễn!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
                 confirmButtonText: 'Xóa ngay',
-                cancelButtonText: 'Quay lại'
+                cancelButtonText: 'Hủy'
             }).then((result) => {
                 if (result.isConfirmed) {
                     Swal.fire({ title: 'Đang xử lý...', showConfirmButton: false, didOpen: () => { Swal.showLoading() } });
@@ -291,13 +219,12 @@
             });
         }
 
-        // 2. Hàm Cập nhật trạng thái (Duyệt / Hủy)
+        // 2. HÀM CẬP NHẬT TRẠNG THÁI (DUYỆT/HỦY)
         function updateStatus(id, actionType) {
             var titleText = actionType === 'Approve' ? 'Duyệt đơn hàng này?' : 'Hủy đơn hàng này?';
             var btnColor = actionType === 'Approve' ? '#198754' : '#ffc107';
             var btnText = actionType === 'Approve' ? 'Duyệt ngay' : 'Đồng ý hủy';
 
-            // Chọn Action Url dựa vào loại hành động
             var urlAction = actionType === 'Approve' ? '@Url.Action("Approve", "DatTour")' : '@Url.Action("Cancel", "DatTour")';
 
             Swal.fire({
